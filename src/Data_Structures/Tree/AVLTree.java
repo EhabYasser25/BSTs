@@ -1,0 +1,28 @@
+package Data_Structures.Tree;
+
+import Data_Structures.Node.Node;
+
+public class AVLTree<T> extends Tree<T> {
+
+    public AVLTree(T data) {
+        super.root.data = data;
+    }
+
+    @Override
+    public Node<T> insert(T data) {
+        return null;
+    }
+
+    @Override
+    public Node<T> delete(T data) {
+        return null;
+    }
+
+    public int getHeight() {
+        return 0;
+    }
+
+    public void update(Node<T> node) {
+
+    }
+}
