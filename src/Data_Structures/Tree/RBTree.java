@@ -7,7 +7,7 @@ public class RBTree<T>  extends Tree<T> {
     private Node<T> nill;
 
     public RBTree(T root) {
-        super.root.data = root;
+        super.root.setData(root);
     }
 
     @Override

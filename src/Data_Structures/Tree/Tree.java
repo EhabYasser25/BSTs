@@ -2,7 +2,7 @@ package Data_Structures.Tree;
 
 import Data_Structures.Node.Node;
 
-public abstract class Tree<T> implements IBST<T> {
+public abstract class Tree<T> implements IBST<T>, Comparable<T> {
 
     protected Node<T> root;
     protected int size;
@@ -45,6 +45,9 @@ public abstract class Tree<T> implements IBST<T> {
     public void replace(Node<T> prev, Node<T> node) {
 
     }
-
-
+    @Override
+    public int compareTo(T o) {
+        return 0;
+    }
+    
 }

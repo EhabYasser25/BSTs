@@ -4,8 +4,8 @@ import Data_Structures.Node.Node;
 
 public class AVLTree<T> extends Tree<T> {
 
-    public AVLTree(T data) {
-        super.root.data = data;
+    public AVLTree(T root) {
+        super.root.setData(root);
     }
 
     @Override
@@ -25,4 +25,5 @@ public class AVLTree<T> extends Tree<T> {
     public void update(Node<T> node) {
 
     }
+
 }
