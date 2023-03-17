@@ -125,8 +125,4 @@ public abstract class Tree<T extends Comparable<T>> {
         return -1;
     }
 
-    public int compareTo(T o) {
-        return 0;
-    }
-
 }
