@@ -29,4 +29,18 @@ public class Node<T extends Comparable<T>>{
         return this.data.compareTo(o.data);
     }
 
+    public boolean isLeftChild(){
+        return this == this.parent.left;
+    }
+
+    public boolean isRightChild(){
+        return this == this.parent.right;
+    }
+
+    public Node<T> getSibling(){
+        if(this.parent == null)
+            return null;
+        return (isLeftChild())? this.parent.right : this.parent.left;
+    }
+
 }

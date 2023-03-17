@@ -2,6 +2,10 @@ package Data_Structures.Node;
 
 public class AVLNode<T extends Comparable<T>> extends Node<T> {
 
+
+    public AVLNode<T> parent = null;
+    public AVLNode<T> left = null;
+    public AVLNode<T> right = null;
     private int height = 0;
     private int balance = 0;
 

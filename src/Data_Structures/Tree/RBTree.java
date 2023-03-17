@@ -7,13 +7,17 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     private final RBNode<T> nil = new RBNode<>(null);
 
     public RBTree(T data) {
-        super.root = new Node<>(data);
-        nil.setBlack(true);
+        super(new RBNode<>(data));
+        this.root.left = nil;
+        this.root.right = nil;
     }
 
     public RBTree(RBNode<T> root) {
-        this.root = root;
-        nil.setBlack(true);
+        super(root);
+        if(this.root.right == null)
+            this.root.right = nil;
+        if(this.root.left == null)
+            this.root.left = nil;
     }
 
     @Override
@@ -26,16 +30,27 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
         return null;
     }
 
-    private void checkAndFix(Node<T> node) {
-
+    private void checkAndFix(RBNode<T> node) {
+        if(node.parent.isBlack())
+            return;
+        RBNode<T> uncle = (RBNode<T>) node.getUncle();
+        if(uncle.isBlack())
+            rotateFix(node);
+        else
+            colorFix(node);
     }
 
-    private void colorFix() {
-
+    private void colorFix(RBNode <T> node) {
+        RBNode<T> parent = node.parent;
+        RBNode<T> grandParent = node.parent.parent;
+        parent.setBlack(true);
+        ((RBNode<T>) parent.getSibling()).setBlack(true);
+        grandParent.setBlack(false);
+        checkAndFix(grandParent);
     }
 
-    private void rotateFix() {
-
+    private void rotateFix(RBNode<T> node) {
+        rotate(node);
     }
 
     private int getRotateCase(Node<T> child, Node<T> parent, Node<T> grandparent) {

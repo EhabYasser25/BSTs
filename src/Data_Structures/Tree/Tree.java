@@ -80,6 +80,23 @@ public abstract class Tree<T extends Comparable<T>> {
 
     }
 
+    public Node<T> rotate(Node<T> node){
+        Node<T> parent = node.parent;
+        Node<T> grandParent = parent.parent;
+        switch (node.compareTo(parent) + parent.compareTo(grandParent) + grandParent.compareTo(node)){
+            case 1: //LR rotation
+                break;
+            case 2://LL rotation
+
+                break;
+            case -1://RL rotation
+                break;
+            case -2://RR rotation
+                break;
+        }
+        return null; //return new parent
+    }
+
     public void replace(Node<T> prev, Node<T> node) {
 
     }
