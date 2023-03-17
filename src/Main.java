@@ -1,17 +1,20 @@
+import Data_Structures.Node.AVLNode;
 import Data_Structures.Node.Node;
-import Data_Structures.Node.RBNode;
-import Data_Structures.Tree.RBTree;
+import Data_Structures.Tree.AVLTree;
 import Data_Structures.Tree.Tree;
 
 public class Main {
     public static void main(String[] args) {
-        RBNode<String> a = new RBNode<>("a");
-        RBNode<String> b = new RBNode<>("b");
-        RBNode<String> c = new RBNode<>("c");
-        RBNode<String> d = new RBNode<>("d");
-        RBNode<String> e = new RBNode<>("e");
-        RBNode<String> f = new RBNode<>("f");
-        RBNode<String> g = new RBNode<>("g");
+        Node<String> root = new AVLNode<>("apple");
+        AVLTree<String> AVL = new AVLTree<>(root.getData());
+        AVL.simpleInsert(root, "banana");
+        AVL.simpleInsert(root, "cherry");
+        AVL.simpleInsert(root, "avocado");
+        AVL.simpleInsert(root, "dates");
+        AVL.simpleInsert(root, "kiwi");
+        AVL.simpleInsert(root, "fig");
+        AVL.simpleInsert(root, "lemon");
+        AVL.simpleInsert(root, "mango");
 
         c.right = d;
         d.right = e;

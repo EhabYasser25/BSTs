@@ -1,12 +1,15 @@
 package Data_Structures.Tree;
 
+import Data_Structures.Node.AVLNode;
 import Data_Structures.Node.Node;
+import Data_Structures.Node.RBNode;
 
 public class AVLTree<T extends Comparable<T>> extends Tree<T> {
 
     public AVLTree(T root) {
-        super.root.setData(root);
+        super(new AVLNode<>(root));
     }
+
 
     @Override
     public Node<T> insert(T data) {
