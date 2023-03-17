@@ -28,9 +28,4 @@ public class AVLNode<T extends Comparable> extends Node<T> {
     private void update(Node<T> node) {
 
     }
-
-    @Override
-    public int compareTo(Node o) {
-        return 0;
-    }
 }

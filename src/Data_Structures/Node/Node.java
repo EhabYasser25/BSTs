@@ -1,6 +1,6 @@
 package Data_Structures.Node;
 
-public abstract class Node<T extends Comparable> implements Comparable<Node>{
+public class Node<T extends Comparable> implements Comparable<Node>{
     protected T data;
     Node<T> parent = null;
     Node<T> left = null;
@@ -14,6 +14,9 @@ public abstract class Node<T extends Comparable> implements Comparable<Node>{
         this.data = data;
     }
 
-
+    @Override
+    public int compareTo(Node o) {
+        return this.data.compareTo(o.data);
+    }
 
 }

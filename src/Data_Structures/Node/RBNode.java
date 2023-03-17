@@ -27,9 +27,4 @@ public class RBNode<T extends Comparable> extends Node<T> {
     public boolean isBlack(RBNode<T> node) {
         return true;
     }
-
-    @Override
-    public int compareTo(Node o) {
-        return this.data.compareTo(o.data);
-    }
 }
