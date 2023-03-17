@@ -76,34 +76,55 @@ public abstract class Tree<T extends Comparable<T>> {
         return null;
     }
 
-    public void rotateRight(Node<T> node) {
-
+    public void rotateRight(Node<T> X) {
+        Node<T> Y = X.left; // Get reference to Y
+        // Fix X's parent links
+        replace(X,Y);
+        // Fix Y's right child links
+        X.left = Y.right; // X replaces its left child with Y's right child
+        Y.right.parent = X; // Y's right child points to X as its new parent
+        // Fix X's links
+        Y.right = X; // X becomes Y's right child
+        X.parent = Y; // Y becomes X's parent
     }
 
-    public void rotateLeft(Node<T> node) {
-
+    public void rotateLeft(Node<T> X) {
+        Node<T> Y = X.right; // Get reference to Y
+        // Fix X's parent links
+        replace(X,Y);
+        // Fix Y's left child links
+        X.right = Y.left; // X replaces its right child with Y's left child
+        Y.left.parent = X; // Y's left child points to X as its new parent
+        // Fix X's links
+        Y.left = X; // X becomes Y's left child
+        X.parent = Y; // Y becomes X's parent
     }
 
-    public Node<T> rotate(Node<T> node){
+    private void replace(Node<T> A, Node<T> B) { // Make A's parent B's parent
+        Node<T> P = A.parent; // Get reference to A's parent
+        B.parent = P; // B's parent reference points to A's parent
+        if (A == P.left) // A was the left child
+            P.left = B; // B is now the left child
+        else    // A was the right child
+            P.right = B; // B is now the right child
+    }
+
+    public int rotate(Node<T> node){
         Node<T> parent = node.parent;
         Node<T> grandParent = parent.parent;
         switch (node.compareTo(parent) + parent.compareTo(grandParent) + grandParent.compareTo(node)){
-            case 1: //LR rotation
-                break;
-            case 2://LL rotation
-
-                break;
-            case -1://RL rotation
-                break;
-            case -2://RR rotation
-                break;
+            case 2: // LL case
+                return 0;
+            case 1:// LR case
+                return 1;
+            case -1:// RL case
+                return 2;
+            case -2:// RR case
+                return 3;
         }
-        return null; //return new parent
+        return -1;
     }
 
-    public void replace(Node<T> prev, Node<T> node) {
-
-    }
     public int compareTo(T o) {
         return 0;
     }
