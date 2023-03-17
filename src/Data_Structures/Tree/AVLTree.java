@@ -2,7 +2,7 @@ package Data_Structures.Tree;
 
 import Data_Structures.Node.Node;
 
-public class AVLTree<T> extends Tree<T> {
+public class AVLTree<T extends Comparable> extends Tree<T> {
 
     public AVLTree(T root) {
         super.root.setData(root);

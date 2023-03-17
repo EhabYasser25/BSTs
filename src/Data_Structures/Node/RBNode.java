@@ -1,6 +1,6 @@
 package Data_Structures.Node;
 
-public class RBNode<T> extends Node<T> {
+public class RBNode<T extends Comparable> extends Node<T> {
 
    private boolean black = false;
 
@@ -28,4 +28,8 @@ public class RBNode<T> extends Node<T> {
         return true;
     }
 
+    @Override
+    public int compareTo(Node o) {
+        return this.data.compareTo(o.data);
+    }
 }

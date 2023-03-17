@@ -3,8 +3,7 @@ package Data_Structures.Tree;
 import Data_Structures.Node.Node;
 import Data_Structures.Node.RBNode;
 
-public class RBTree<T>  extends Tree<T> {
-
+public class RBTree<T extends Comparable>  extends Tree<T> {
     private RBNode<T> nil;
 
     public RBTree(T root) {
