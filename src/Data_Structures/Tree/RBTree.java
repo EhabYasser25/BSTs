@@ -3,12 +3,11 @@ package Data_Structures.Tree;
 import Data_Structures.Node.Node;
 import Data_Structures.Node.RBNode;
 
-public class RBTree<T extends Comparable>  extends Tree<T> {
+public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     private RBNode<T> nil;
 
     public RBTree(T root) {
-        super.root.setData(root);
-        nil.setBlack(true);
+        super(new RBNode<T>(root));
     }
 
     @Override

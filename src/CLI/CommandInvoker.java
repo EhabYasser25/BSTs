@@ -33,6 +33,14 @@ abstract class OneOperation {
         this.word = word;
         this.root = root;
     }
+
+    public String getWord() {
+        return word;
+    }
+
+    public Node<String> getRoot() {
+        return root;
+    }
 }
 
 class Search extends OneOperation implements CLICommands {
