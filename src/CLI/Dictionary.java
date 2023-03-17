@@ -15,7 +15,7 @@ public class Dictionary implements IDictionary {
 
     Tree<String> tree;
 
-    CommandInvoker invoker;
+    CommandInvoker invoker = new CommandInvoker();
 
     CLICommands command;
 
@@ -35,7 +35,6 @@ public class Dictionary implements IDictionary {
         System.out.println("4. Batch insert");
         System.out.println("5. Batch delete");
         System.out.println("0. Exit");
-        System.out.print("> ");
         programLoop();
     }
 
@@ -50,15 +49,16 @@ public class Dictionary implements IDictionary {
     public void programLoop() {
         Scanner sc = new Scanner(System.in);
         while(true) {
+            System.out.print("> ");
             int option = sc.nextInt();
-            setCommand(option);
+            if(setCommand(option) == -1) continue;
             command = invoker.invoke(eCommand);
             // TODO command.setData(word, root);
             command.execute();
         }
     }
 
-    public void setCommand(int option) {
+    public int setCommand(int option) {
         switch (option) {
             case 0:
                 System.exit(0);
@@ -77,8 +77,10 @@ public class Dictionary implements IDictionary {
             case 5:
                 eCommand = Commands.BATCHDELETE;
             default:
-                System.out.println("Invalid input!");
+                System.out.println("Invalid input!!");
+                return -1;
         }
+        return 0;
     }
 
     public void printIntro() {
