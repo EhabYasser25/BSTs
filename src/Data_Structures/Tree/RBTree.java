@@ -4,7 +4,7 @@ import Data_Structures.Node.Node;
 
 public class RBTree<T>  extends Tree<T> {
 
-    private Node<T> nill;
+    private Node<T> nil;
 
     public RBTree(T root) {
         super.root.setData(root);
