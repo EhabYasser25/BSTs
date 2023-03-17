@@ -1,6 +1,6 @@
 package Data_Structures.Node;
 
-public class AVLNode<T> extends Node<T> {
+public class AVLNode<T extends Comparable> extends Node<T> {
 
     private int height = 0;
     private int balance = 0;
@@ -29,4 +29,8 @@ public class AVLNode<T> extends Node<T> {
 
     }
 
+    @Override
+    public int compareTo(Node o) {
+        return 0;
+    }
 }
