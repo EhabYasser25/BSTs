@@ -26,13 +26,23 @@ public class CommandInvoker {
     }
 }
 
-class Search implements CLICommands {
-
+abstract class OneOperation {
     private String word;
-
-    public void setWord(String word) {
+    private Node<String> root;
+    public void setData(String word, Node<String> root) {
         this.word = word;
+        this.root = root;
     }
+}
+
+class Search extends OneOperation implements CLICommands {
+    @Override
+    public void execute() {
+
+    }
+}
+
+class Insert extends OneOperation implements CLICommands {
 
     @Override
     public void execute() {
@@ -40,27 +50,7 @@ class Search implements CLICommands {
     }
 }
 
-class Insert implements CLICommands {
-
-    private String word;
-
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    @Override
-    public void execute() {
-
-    }
-}
-
-class Delete implements CLICommands {
-
-    private String word;
-
-    public void setWord(String word) {
-        this.word = word;
-    }
+class Delete extends OneOperation implements CLICommands {
 
     @Override
     public void execute() {
@@ -76,7 +66,6 @@ class BatchInsert implements CLICommands {
     }
 }
 
-
 class BatchDelete implements CLICommands {
 
     @Override
@@ -85,13 +74,7 @@ class BatchDelete implements CLICommands {
     }
 }
 
-class Size implements CLICommands {
-
-    private Node<String> root;
-
-    public void setRoot(Node<String> root) {
-        this.root = root;
-    }
+class Size extends OneOperation implements CLICommands {
 
     @Override
     public void execute() {
@@ -99,22 +82,10 @@ class Size implements CLICommands {
     }
 }
 
-class Height implements CLICommands {
-
-    private Node<String> root;
-
-    public void setRoot(Node<String> root) {
-        this.root = root;
-    }
+class Height extends OneOperation implements CLICommands {
 
     @Override
     public void execute() {
 
     }
 }
-
-
-
-
-
-
