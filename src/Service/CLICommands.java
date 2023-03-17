@@ -1,4 +1,4 @@
-package CLI;
+package Service;
 
 public interface CLICommands {
     public void execute();

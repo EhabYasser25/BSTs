@@ -20,6 +20,8 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
             this.root.left = nil;
     }
 
+    public RBTree() { }
+
     @Override
     public Node<T> insert(T data) {
         return null;
@@ -50,7 +52,7 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     }
 
     private void rotateFix(RBNode<T> node) {
-        rotate(node);
+//        rotate(node);
     }
 
     private int getRotateCase(Node<T> child, Node<T> parent, Node<T> grandparent) {

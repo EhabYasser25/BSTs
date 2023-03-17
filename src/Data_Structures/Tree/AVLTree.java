@@ -10,6 +10,7 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
         super(new AVLNode<>(root));
     }
 
+    public AVLTree() { }
 
     @Override
     public Node<T> insert(T data) {

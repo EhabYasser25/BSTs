@@ -1,4 +1,4 @@
-package CLI;
+package Service;
 
 public enum Commands {
     INSERT,
