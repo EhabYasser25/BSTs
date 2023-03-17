@@ -2,7 +2,7 @@ package Data_Structures.Tree;
 
 import Data_Structures.Node.Node;
 
-public abstract class Tree<T extends Comparable>{
+public abstract class Tree<T extends Comparable<T>>{
 
     protected Node<T> root;
     protected int size;
@@ -15,11 +15,27 @@ public abstract class Tree<T extends Comparable>{
         return size;
     }
 
-    public void search() {
-
+    public Node<T> search(T data) {
+        return recursiveSearch(this.root, data);
     }
 
-    public Node<T> simpleInsert(Node<T> node) {
+    private Node<T> recursiveSearch(Node<T> current, T data){
+
+        if(current == null)
+            return null;
+
+        if(current.getData().compareTo(data) < 0){
+            return recursiveSearch(current.right, data);
+        }
+        else if(current.getData().compareTo(data) == 0){
+            return current;
+        }
+        else
+            return recursiveSearch(current.left, data);
+    }
+
+    public Node<T> simpleInsert(Node <T> data) {
+        return null;
     }
 
     public Node<T> simpleDelete(Node<T> node) {

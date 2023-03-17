@@ -1,10 +1,21 @@
 package Data_Structures.Node;
 
-public class Node<T extends Comparable> implements Comparable<Node>{
+public class Node<T extends Comparable<T>>{
     protected T data;
-    Node<T> parent = null;
-    Node<T> left = null;
-    Node<T> right = null;
+    public Node<T> parent = null;
+    public Node<T> left = null;
+    public Node<T> right = null;
+
+    public Node(T data) {
+        this.data = data;
+    }
+    public Node<T> getParent() {
+        return parent;
+    }
+
+    public void setParent(Node<T> parent) {
+        this.parent = parent;
+    }
 
     public T getData() {
             return data;
@@ -14,8 +25,7 @@ public class Node<T extends Comparable> implements Comparable<Node>{
         this.data = data;
     }
 
-    @Override
-    public int compareTo(Node o) {
+    public int compareTo(Node<T> o) {
         return this.data.compareTo(o.data);
     }
 

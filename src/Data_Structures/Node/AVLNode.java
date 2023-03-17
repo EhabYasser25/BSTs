@@ -1,12 +1,12 @@
 package Data_Structures.Node;
 
-public class AVLNode<T extends Comparable> extends Node<T> {
+public class AVLNode<T extends Comparable<T>> extends Node<T> {
 
     private int height = 0;
     private int balance = 0;
 
     public AVLNode(T data) {
-        super.data = data;
+        super(data);
     }
 
     public int balance() {

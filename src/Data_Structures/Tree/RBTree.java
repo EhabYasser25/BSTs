@@ -3,11 +3,16 @@ package Data_Structures.Tree;
 import Data_Structures.Node.Node;
 import Data_Structures.Node.RBNode;
 
-public class RBTree<T extends Comparable>  extends Tree<T> {
-    private RBNode<T> nil;
+public class RBTree<T extends Comparable<T>>  extends Tree<T> {
+    private final RBNode<T> nil = new RBNode<>(null);
 
-    public RBTree(T root) {
-        super.root.setData(root);
+    public RBTree(T data) {
+        super.root = new Node<>(data);
+        nil.setBlack(true);
+    }
+
+    public RBTree(RBNode<T> root) {
+        this.root = root;
         nil.setBlack(true);
     }
 
