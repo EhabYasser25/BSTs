@@ -5,7 +5,16 @@ import Data_Structures.Tree.Tree;
 
 public class Main {
     public static void main(String[] args) {
-        Node<Integer> root = new AVLNode<>(10);
-        Tree<Integer> tree = new AVLTree<>(root);
+        Node<String> root = new AVLNode<>("apple");
+        AVLTree<String> AVL = new AVLTree<>(root.getData());
+        AVL.simpleInsert(root, "banana");
+        AVL.simpleInsert(root, "cherry");
+        AVL.simpleInsert(root, "avocado");
+        AVL.simpleInsert(root, "dates");
+        AVL.simpleInsert(root, "kiwi");
+        AVL.simpleInsert(root, "fig");
+        AVL.simpleInsert(root, "lemon");
+        AVL.simpleInsert(root, "mango");
+
     }
 }
