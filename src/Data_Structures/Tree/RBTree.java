@@ -41,31 +41,63 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
         return node;
     }
 
-    private void checkAndFix(RBNode<T> node) {
-        if(node.parent.isBlack())
+    private void checkAndFix(RBNode<T> Z) { // Called after inserting Z as a red node
+
+        if (size == 1){ // Z is the root
+            Z.recolor();
             return;
-        RBNode<T> uncle = (RBNode<T>) node.getUncle();
-        if(uncle.isBlack())
-            rotateFix(node);
+        }
+
+        RBNode<T> Y = Z.parent; // Parent node
+
+        if(Y.isBlack()) // No problems if parent is black
+            return;
+
+        // parent Y is red, grandparent X is black
+        RBNode<T> U = Z.getUncle(), X = Y.parent;
+        if(U.isBlack())
+            rotateFix(X,Y,Z, getRotateCase(X,Y,Z));
         else
-            colorFix(node);
+            colorFix(X,Y,Z); // Uncle is red, recolor and check the newly red node
     }
 
-    private void colorFix(RBNode <T> node) {
-        RBNode<T> parent = node.parent;
-        RBNode<T> grandParent = node.parent.parent;
-        parent.setBlack(true);
-        ((RBNode<T>) parent.getSibling()).setBlack(true);
-        grandParent.setBlack(false);
-        checkAndFix(grandParent);
+    private void colorFix(RBNode<T> X, RBNode<T> Y, RBNode<T> Z) {
+        RBNode<T> U = Z.getUncle();
+        Y.recolor(); X.recolor(); U.recolor(); // Change Uncle and parent to black, grandparent to red
+        if (X == root){ // If the grandparent is the root
+            X.recolor(); // recolor it back to black
+        }else{
+            checkAndFix(X); //If it is not, run the check method again on the newly red grandparent
+        }
     }
 
-    private void rotateFix(RBNode<T> node) {
-//        rotate(node);
+    private void rotateFix(RBNode<T> X, RBNode<T> Y, RBNode<T> Z, int rotateCase) {
+        switch(rotateCase){
+            case 0 -> { //LL
+                rotateRight(X);
+                X.recolor(); Y.recolor();
+            }
+            case 1 -> { //LR
+                rotateLeft(Y); rotateRight(X);
+                X.recolor(); Z.recolor();
+            }
+            case 2 -> { //RL
+                rotateRight(Y); rotateLeft(X);
+                X.recolor(); Z.recolor();
+            }
+            case 3 -> { //RR
+                rotateLeft(X);
+                X.recolor(); Y.recolor();
+            }
+        }
     }
 
-    private int getRotateCase(Node<T> child, Node<T> parent, Node<T> grandparent) {
-        return 0;
+    private int getRotateCase(RBNode<T> X, RBNode<T> Y, RBNode<T> Z){
+        if (Y == X.left){
+            return (Z == Y.left)? 0:1;
+        }else{
+            return (Z == Y.left)? 2:3;
+        }
     }
 
     public int getHeight() {

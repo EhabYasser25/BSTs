@@ -19,10 +19,16 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public void recolor() {
-
+        black = !black;
     }
 
-    public Node<T> getUncle() {
+    public RBNode<T> getSibling(){
+        if(this.parent == null)
+            return null;
+        return (isLeftChild())? this.parent.right : this.parent.left;
+    }
+
+    public RBNode<T> getUncle() {
         if(this.parent == null)
             return null;
         return this.parent.getSibling();
@@ -33,6 +39,6 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public RBNode<T> getParent(){
-        return (RBNode<T>) this.parent;
+        return this.parent;
     }
 }
