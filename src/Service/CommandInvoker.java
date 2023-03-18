@@ -108,13 +108,7 @@ class Size implements CLICommands {
 
     @Override
     public void execute(Tree<String> tree, TreeType type) {
-        if(type == TreeType.AVL) {
-            AVLTree<String> avl = (AVLTree<String>) tree;
-            avl.search(avl.root, this.word);
-        } else if(type == TreeType.RB){
-            RBTree<String> rb = (RBTree<String>) tree;
-            rb.search(rb.root, this.word);
-        }
+        System.out.println("The size of your tree nodes = " + tree.getSize());
     }
 }
 
