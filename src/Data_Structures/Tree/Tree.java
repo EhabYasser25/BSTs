@@ -3,17 +3,11 @@ package Data_Structures.Tree;
 import Data_Structures.Node.Node;
 
 public abstract class Tree<T extends Comparable<T>> {
-
-    protected Node<T> root;
+    /**
+     * Each tree has its own root, so it is removed from the parent class
+     * We can just add it for normal node, but it's preferred to make each tree has its own root!
+     * */
     protected int size;
-
-    public abstract Node<T> insert(T data);
-
-//    public abstract Node<T> delete(T data);
-
-    public Tree(Node<T> root) {
-        this.root = root;
-    }
 
     public Tree() {
 
@@ -27,8 +21,8 @@ public abstract class Tree<T extends Comparable<T>> {
         return size;
     }
 
-    public Node<T> search(T data) {
-        return recursiveSearch(this.root, data);
+    public Node<T> search(Node<T> root, T data) {
+        return recursiveSearch(root, data);
     }
 
     private Node<T> recursiveSearch(Node<T> current, T data){
@@ -46,15 +40,12 @@ public abstract class Tree<T extends Comparable<T>> {
             return recursiveSearch(current.left, data);
     }
 
-    public Node<T> simpleInsert(T data) {
-        return simpleInsert(this.root, data);
-    }
     
     public Node<T> simpleInsert(Node<T> root, T data) {
         Node<T> node = null;
-        if(this.root == null) {
+        if(root == null) {
             node = new Node<T>(data);
-            this.root = node;
+            root = node;
             return node;
         }
         if(root.left == null && root.getData().compareTo(data) > 0) {
@@ -80,8 +71,8 @@ public abstract class Tree<T extends Comparable<T>> {
         return null;
     }
 
-    public Node<T> delete(T key) {
-        Node<T> node = search(key);
+    public Node<T> delete(Node<T> root, T key) {
+        Node<T> node = search(root, key);
         return simpleDelete(node);
     }
 
@@ -166,13 +157,11 @@ public abstract class Tree<T extends Comparable<T>> {
         return -1;
     }
 
-    public void visit(VisitType visitType) {
+    public void visit(VisitType visitType, Node<T> root) {
         if(visitType == VisitType.DFS)
             dfs(root);
         else if(visitType == VisitType.BFS)
             bfs(root);
-        else
-            return;
     }
 
     public void dfs(Node<T> root) {
@@ -188,7 +177,4 @@ public abstract class Tree<T extends Comparable<T>> {
         System.out.println("bfs");
     }
 
-    public void setRoot(Node<T> root) {
-        this.root = root;
-    }
 }
