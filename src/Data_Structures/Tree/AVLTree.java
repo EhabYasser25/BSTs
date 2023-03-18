@@ -31,8 +31,8 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
 
     public void update(AVLNode<T> Y) {
         if (Y == null) return;
-
-        int bf = Y.setBalance();
+        Y.setBalance();
+        int bf = Y.getBalance();
         // Test for imbalance and fix heights
         if (bf == -2){ // Left imbalance
             if (Y.left.getBalance() == 1)
@@ -52,6 +52,9 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     }
 
     private void leftLeftFix(AVLNode<T> x){
+        // Avoiding nulls /*Rowaina*/
+        if(x == null || x.left == null || x.right == null) return;
+
         AVLNode<T> y = x.left;
         rotateRight(x);
         x.setHeight(); x.setBalance();
@@ -59,6 +62,9 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     }
 
     private void leftRightFix(AVLNode<T> x){
+        // Avoiding nulls /*Rowaina*/
+        if(x == null || x.left == null || x.right == null) return;
+
         AVLNode<T> y = x.left, z = y.right;
         rotateLeft(y); rotateRight(x);
         y.setHeight(); y.setBalance();
@@ -67,6 +73,9 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     }
 
     private void rightLeftFix(AVLNode<T> x){
+        // Avoiding nulls /*Rowaina*/
+        if(x == null || x.left == null || x.right == null) return;
+
         AVLNode<T> y = x.right, z = y.left;
         rotateRight(y); rotateLeft(x);
         y.setHeight(); y.setBalance();
@@ -75,6 +84,9 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     }
 
     private void rightRightFix(AVLNode<T> x){
+        // Avoiding nulls /*Rowaina*/
+        if(x == null || x.right == null) return;
+
         AVLNode<T> y = x.right;
         rotateLeft(x);
         x.setHeight(); x.setBalance();

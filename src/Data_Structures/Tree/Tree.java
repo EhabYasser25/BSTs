@@ -9,9 +9,7 @@ public abstract class Tree<T extends Comparable<T>> {
      * */
     protected int size;
 
-    public Tree() {
-
-    }
+    public Tree() { }
 
     public void setSize(int size) {
         this.size = size;
@@ -40,7 +38,6 @@ public abstract class Tree<T extends Comparable<T>> {
             return recursiveSearch(current.left, data);
     }
 
-    
     public Node<T> simpleInsert(Node<T> root, T data) {
         Node<T> node = null;
         if(root == null) {
@@ -101,6 +98,12 @@ public abstract class Tree<T extends Comparable<T>> {
     }
 
     private Node<T> getSuccessor(Node<T> node) {
+        // Avoiding nulls /*Rowaina*/
+        if(node == null || node.left == null) {
+            System.out.println("Node passed null right rotate");
+            return null;
+        }
+
         Node<T> current = node;
         while (current.left != null) {
             current = current.left;
@@ -109,6 +112,12 @@ public abstract class Tree<T extends Comparable<T>> {
     }
 
     public void rotateRight(Node<T> X) {
+        // Avoiding nulls /*Rowaina*/
+        if(X == null || X.left == null || X.right == null) {
+            System.out.println("Node passed null right rotate");
+            return;
+        }
+
         Node<T> Y = X.left; // Get reference to Y
         // Fix X's parent links
         replace(X,Y);
@@ -121,6 +130,12 @@ public abstract class Tree<T extends Comparable<T>> {
     }
 
     public void rotateLeft(Node<T> X) {
+        // Avoiding nulls /*Rowaina*/
+        if(X == null || X.left == null || X.right == null) {
+            System.out.println("Node passed null left rotate");
+            return;
+        }
+
         Node<T> Y = X.right; // Get reference to Y
         // Fix X's parent links
         replace(X,Y);
@@ -133,6 +148,12 @@ public abstract class Tree<T extends Comparable<T>> {
     }
 
     private void replace(Node<T> A, Node<T> B) { // Make A's parent B's parent
+        // Avoiding nulls /*Rowaina*/
+        if(A == null || B == null) {
+            System.out.println("Null nodes passed in replace");
+            return;
+        }
+
         Node<T> P = A.parent; // Get reference to A's parent
         B.parent = P; // B's parent reference points to A's parent
         if (A == P.left) // A was the left child
@@ -142,19 +163,25 @@ public abstract class Tree<T extends Comparable<T>> {
     }
 
     public int rotate(Node<T> node){
+        // Avoiding nulls /*Rowaina*/
+        if(node == null || node.parent == null) {
+            System.out.println("Null node passed rotate");
+            return -1;
+        }
+
         Node<T> parent = node.parent;
         Node<T> grandParent = parent.parent;
-        switch (node.compareTo(parent) + parent.compareTo(grandParent) + grandParent.compareTo(node)){
-            case 2: // LL case
-                return 0;
-            case 1:// LR case
-                return 1;
-            case -1:// RL case
-                return 2;
-            case -2:// RR case
-                return 3;
-        }
-        return -1;
+        return switch (node.compareTo(parent) + parent.compareTo(grandParent) + grandParent.compareTo(node)) {
+            case 2 -> // LL case
+                    0;
+            case 1 ->// LR case
+                    1;
+            case -1 ->// RL case
+                    2;
+            case -2 ->// RR case
+                    3;
+            default -> -1;
+        };
     }
 
     public void visit(VisitType visitType, Node<T> root) {

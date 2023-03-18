@@ -42,6 +42,10 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     }
 
     private void checkAndFix(RBNode<T> Z) { // Called after inserting Z as a red node
+        // Avoiding nulls /*Rowaina*/
+        if(Z == null) {
+            return;
+        }
 
         if (size == 1){ // Z is the root
             Z.recolor();
@@ -62,6 +66,10 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     }
 
     private void colorFix(RBNode<T> X, RBNode<T> Y, RBNode<T> Z) {
+        // Avoiding nulls /*Rowaina*/
+        if(X == null || Y == null || Z == null) {
+            return;
+        }
         RBNode<T> U = Z.getUncle();
         Y.recolor(); X.recolor(); U.recolor(); // Change Uncle and parent to black, grandparent to red
         if (X == root){ // If the grandparent is the root
@@ -72,6 +80,10 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     }
 
     private void rotateFix(RBNode<T> X, RBNode<T> Y, RBNode<T> Z, int rotateCase) {
+        // Avoiding nulls /*Rowaina*/
+        if(X == null || Y == null || Z == null) {
+            return;
+        }
         switch(rotateCase){
             case 0 -> { //LL
                 rotateRight(X);
@@ -93,6 +105,10 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
     }
 
     private int getRotateCase(RBNode<T> X, RBNode<T> Y, RBNode<T> Z){
+        // Avoiding nulls /*Rowaina*/
+        if(X == null || Y == null || Z == null || X.left == null || Y.left == null) {
+            return -1;
+        }
         if (Y == X.left){
             return (Z == Y.left)? 0:1;
         }else{
@@ -100,6 +116,7 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
         }
     }
 
+    // TODO get RB height
     public int getHeight() {
         return 0;
     }

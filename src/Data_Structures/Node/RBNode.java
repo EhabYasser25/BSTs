@@ -35,7 +35,7 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public boolean isBlack(RBNode<T> node) {
-        return true;
+        return this.black;
     }
 
     public RBNode<T> getParent(){

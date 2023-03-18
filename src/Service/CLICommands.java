@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface CLICommands {
     public void execute(Tree<String> tree, TreeType type);
-
 }
 
