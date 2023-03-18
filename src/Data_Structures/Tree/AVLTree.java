@@ -12,16 +12,18 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     AVLNode<T> root;
 
     public AVLTree(T root) {
-        this.root = new AVLNode<>(root);
+        super(new AVLNode<>(root));
     }
 
     public AVLTree() { }
 
-    public AVLNode<T> insert(T data) {
+    @Override
+    public Node<T> insert(T data) {
         return null;
     }
 
-    public AVLNode<T> delete(T data) {
+    @Override
+    public Node<T> delete(T data) {
         return null;
     }
 
