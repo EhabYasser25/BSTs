@@ -15,12 +15,10 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
         return balance;
     }
 
-    public void setBalance() {
-        // Avoiding nulls /*Rowaina*/
-        if(right == null && left == null) balance = 0;
-        else if(left == null) balance = right.height;
-        else if(right == null) balance = left.height;
-        else balance = right.height - left.height;
+    public int setBalance() {
+        int lh = (left == null)? -1 : left.height, rh = (right == null)? -1 : right.height;
+        balance = rh - lh;
+        return balance;
     }
 
     public int getHeight() {
@@ -28,11 +26,8 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public void setHeight() {
-        // Avoiding nulls /*Rowaina*/
-        if(left == null && right == null) height = 0;
-        else if(left == null) height = right.height;
-        else if(right == null) height = left.height;
-        else height = Math.max(left.height, right.height) + 1;
+        int lh = (left == null)? -1 : left.height, rh = (right == null)? -1 : right.height;
+        height = Math.max(lh,rh) + 1;
     }
 
     private void update(Node<T> node) {
