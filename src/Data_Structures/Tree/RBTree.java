@@ -11,7 +11,7 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
 
     private final RBNode<T> nil = new RBNode<>(null);
 
-    private RBNode<T> root;
+    public RBNode<T> root;
 
     public RBTree(T data) {
         this.root = new RBNode<>(data);

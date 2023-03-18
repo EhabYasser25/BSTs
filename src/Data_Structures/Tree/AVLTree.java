@@ -9,7 +9,7 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     * Each tree has its own root, so it is removed from the parent class
     * We can just add it for normal node, but it's preferred to make each tree has its own root!
     * */
-    AVLNode<T> root;
+    public AVLNode<T> root;
 
     public AVLTree(T root) {
         this.root = new AVLNode<>(root);

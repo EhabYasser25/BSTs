@@ -13,9 +13,8 @@ public class TreeFactory {
             return new AVLTree<>();
         } else if(tree == TreeType.AVL) {
             return new RBTree<>();
-        } else {
-            return null;
         }
+        throw new RuntimeException("Tree not supported");
     }
 
 }
