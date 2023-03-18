@@ -13,20 +13,21 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
         super(data);
     }
 
-    public int balance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public int setBalance() {
+        this.balance = this.right.balance - this.left.balance;
+        return this.balance;
     }
 
     public int height() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setHeight() {
+        this.height = Math.max(this.left.height, this.right.height) + 1;
     }
 
     private void update(Node<T> node) {

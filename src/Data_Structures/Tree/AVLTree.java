@@ -30,4 +30,27 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
 
     }
 
+    public void update(AVLNode<T> Y){ //CALLED ON PARENT AFTER INSERTION AND DELETION
+        if (Y == null) return;
+        int bf = Y.setBalance();
+
+        if (bf == -2){
+            if (Y.left.getBalance() == 1){
+                //LR
+            }else{
+                //LL
+            }
+        }else if (bf == 2){
+            if (Y.right.getBalance() == 1){
+                //RL
+            }else{
+                //RR
+            }
+        }else{
+            Y.setHeight();
+        }
+
+        update(Y.parent);
+    }
+
 }
