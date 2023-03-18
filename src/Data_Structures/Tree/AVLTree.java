@@ -5,10 +5,10 @@ import Data_Structures.Node.Node;
 import Data_Structures.Node.RBNode;
 
 public class AVLTree<T extends Comparable<T>> extends Tree<T> {
-   /**
-    * Each tree has its own root, so it is removed from the parent class
-    * We can just add it for normal node, but it's preferred to make each tree has its own root!
-    * */
+    /**
+     * Each tree has its own root, so it is removed from the parent class
+     * We can just add it for normal node, but it's preferred to make each tree has its own root!
+     * */
     AVLNode<T> root;
 
     public AVLTree(T root) {
@@ -26,11 +26,58 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
     }
 
     public int getHeight() {
-        return 0;
+        return this.root.getHeight();
     }
 
-    public void update(Node<T> node) {
+    public void update(AVLNode<T> Y) {
+        if (Y == null) return;
 
+        int bf = Y.setBalance();
+        // Test for imbalance and fix heights
+        if (bf == -2){ // Left imbalance
+            if (Y.left.getBalance() == 1)
+                leftRightFix(Y); // Caused by right subtree of left child
+            else
+                leftLeftFix(Y); // Caused by left subtree of left child
+        }else if (bf == 2){ // Right imbalance
+            if (Y.right.getBalance() == -1)
+                rightLeftFix(Y); // Caused by left subtree of right child
+            else
+                rightRightFix(Y); // Caused by right subtree of right child
+        }else{ // Node has no imbalance
+            Y.setHeight();
+        }
+
+        update(Y.parent);
     }
 
+    private void leftLeftFix(AVLNode<T> x){
+        AVLNode<T> y = x.left;
+        rotateRight(x);
+        x.setHeight(); x.setBalance();
+        y.setHeight(); y.setBalance();
+    }
+
+    private void leftRightFix(AVLNode<T> x){
+        AVLNode<T> y = x.left, z = y.right;
+        rotateLeft(y); rotateRight(x);
+        y.setHeight(); y.setBalance();
+        x.setHeight(); x.setBalance();
+        z.setHeight(); z.setBalance();
+    }
+
+    private void rightLeftFix(AVLNode<T> x){
+        AVLNode<T> y = x.right, z = y.left;
+        rotateRight(y); rotateLeft(x);
+        y.setHeight(); y.setBalance();
+        x.setHeight(); x.setBalance();
+        z.setHeight(); z.setBalance();
+    }
+
+    private void rightRightFix(AVLNode<T> x){
+        AVLNode<T> y = x.right;
+        rotateLeft(x);
+        x.setHeight(); x.setBalance();
+        y.setHeight(); y.setBalance();
+    }
 }
