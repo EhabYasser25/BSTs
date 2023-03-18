@@ -17,8 +17,37 @@ public class AVLTree<T extends Comparable<T>> extends Tree<T> {
 
     public AVLTree() { }
 
-    public AVLNode<T> insert(T data) {
-        return null;
+    public void insert(T data) {
+        root = insert(root,data);
+    }
+    
+    public AVLNode<T> insert(AVLNode<T> node,T data) {
+        //insert data in its place in bst
+        AVLNode<T> tmp = new AVLNode<T>(data);
+        if(node == null){
+            node = tmp;
+            return node;
+        } 
+        int compare = node.getData().compareTo(data);
+        if(node.left == null && compare > 0) {
+            node.left = tmp;
+            tmp.parent = node;
+            System.out.println("Parent " + node.getData() + " left child " + node.left.getData());
+            return tmp;
+        } else if(node.right == null && compare < 0) {
+            node.right = tmp;
+            tmp.parent = node;
+            System.out.println("Parent " + node.getData() + " left child " + node.left.getData());
+            return tmp;
+        } else if(node.left != null && compare > 0) {
+            insert(node.left, data);
+        } else if(node.right != null && compare < 0) {
+            insert(node.right, data);
+        } else if((node.left != null && node.left.getData().compareTo(data) == 0) || (node.right != null && node.right.getData().compareTo(data) == 0)) {
+            System.out.println("Found!!\n");
+            return null;
+        }
+        return tmp;
     }
 
     public AVLNode<T> delete(T data) {
