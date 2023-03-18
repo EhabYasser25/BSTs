@@ -3,17 +3,11 @@ package Data_Structures.Tree;
 import Data_Structures.Node.Node;
 
 public abstract class Tree<T extends Comparable<T>> {
-
-    protected Node<T> root;
+    /**
+     * Each tree has its own root, so it is removed from the parent class
+     * We can just add it for normal node, but it's preferred to make each tree has its own root!
+     * */
     protected int size;
-
-    public abstract Node<T> insert(T data);
-
-    public abstract Node<T> delete(T data);
-
-    public Tree(Node<T> root) {
-        this.root = root;
-    }
 
     public Tree() {
 
@@ -27,8 +21,8 @@ public abstract class Tree<T extends Comparable<T>> {
         return size;
     }
 
-    public Node<T> search(T data) {
-        return recursiveSearch(this.root, data);
+    public Node<T> search(Node<T> root, T data) {
+        return recursiveSearch(root, data);
     }
 
     private Node<T> recursiveSearch(Node<T> current, T data){
@@ -45,20 +39,25 @@ public abstract class Tree<T extends Comparable<T>> {
         else
             return recursiveSearch(current.left, data);
     }
+
     
     public Node<T> simpleInsert(Node<T> root, T data) {
-        if(this.root == null) {
-            return null;
-        }
         Node<T> node = null;
+        if(root == null) {
+            node = new Node<T>(data);
+            root = node;
+            return node;
+        }
         if(root.left == null && root.getData().compareTo(data) > 0) {
             node = new Node<T>(data);
             root.left = node;
+            node.parent = root;
             System.out.println("Parent " + root.getData() + " left child " + root.left.getData());
             return node;
         } else if(root.right == null && root.getData().compareTo(data) < 0) {
             node = new Node<T>(data);
             root.right = node;
+            node.parent = root;
             System.out.println("Parent " + root.getData() + " right child " + root.right.getData());
             return node;
         } else if(root.left != null && root.getData().compareTo(data) > 0) {
@@ -72,8 +71,41 @@ public abstract class Tree<T extends Comparable<T>> {
         return null;
     }
 
+    public Node<T> delete(Node<T> root, T key) {
+        Node<T> node = search(root, key);
+        return simpleDelete(node);
+    }
+
     public Node<T> simpleDelete(Node<T> node) {
-        return null;
+        Node<T> tmp;
+        if(node == null)
+            return null;
+        if(node.left == null && node.right == null) {
+            if(node.parent.right == node)
+                node.parent.right = null;
+            else
+                node.parent.left = null;
+            return node;
+        }
+        else if(node.left == null) {
+            tmp = node.right;
+        }
+        else if(node.right == null) {
+            tmp = node.left;
+        }
+        else {
+            tmp = getSuccessor(node.right);
+        }
+        node.setData(tmp.getData());
+        return simpleDelete(tmp);
+    }
+
+    private Node<T> getSuccessor(Node<T> node) {
+        Node<T> current = node;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
     }
 
     public void rotateRight(Node<T> X) {
@@ -125,8 +157,24 @@ public abstract class Tree<T extends Comparable<T>> {
         return -1;
     }
 
-    public int compareTo(T o) {
-        return 0;
+    public void visit(VisitType visitType, Node<T> root) {
+        if(visitType == VisitType.DFS)
+            dfs(root);
+        else if(visitType == VisitType.BFS)
+            bfs(root);
+    }
+
+    public void dfs(Node<T> root) {
+        if(root == null)
+            return;
+        System.out.println(root.getData());
+
+        dfs(root.left);
+        dfs(root.right);
+    }
+
+    public void bfs(Node<T> root) {
+        System.out.println("bfs");
     }
 
 }
