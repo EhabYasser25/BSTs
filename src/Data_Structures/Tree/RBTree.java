@@ -24,12 +24,16 @@ public class RBTree<T extends Comparable<T>>  extends Tree<T> {
 
     @Override
     public Node<T> insert(T data) {
+        RBNode<T> newNode = new RBNode<>(data);
+        this.simpleInsert(data);
         return null;
     }
 
     @Override
-    public Node<T> delete(T data) {
-        return null;
+    public RBNode<T> delete(T key) {
+        RBNode<T> node = (RBNode<T>) delete(key);
+        checkAndFix(node);
+        return node;
     }
 
     private void checkAndFix(RBNode<T> node) {
