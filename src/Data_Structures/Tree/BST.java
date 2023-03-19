@@ -63,6 +63,9 @@ public class BST<T extends Comparable<T>> {
             node.setLeft(insert(node.getLeft(), node, newNode));
         else if(node.compareTo(newNode) < 0)
             node.setRight(insert(node.getRight(), node, newNode));
+        else {
+            //TODO when node is found
+        }
         return node;
     }
 

@@ -1,9 +1,9 @@
-//package Data_Structures.Tree;
-//
-//import Data_Structures.Node.AVLNode;
-//import Data_Structures.Node.Node;
-//
-//public class AVL<T extends Comparable<T>> extends BST<T> {
+package Data_Structures.Tree;
+
+import Data_Structures.Node.AVLNode;
+import Data_Structures.Node.Node;
+
+public class AVL<T extends Comparable<T>> extends BST<T> {
 //    /**
 //     * Each tree has its own root, so it is removed from the parent class
 //     * We can just add it for normal node, but it's preferred to make each tree has its own root!
@@ -18,7 +18,7 @@
 //
 //    public Node<T> insert(T data) {
 //        root = insert(root, data);
-//        return ;
+//        return root;
 //    }
 //
 //    public AVLNode<T> insert(AVLNode<T> node,T data) {
@@ -29,15 +29,15 @@
 //            return node;
 //        }
 //        int compare = node.getData().compareTo(data);
-//        if(node.left == null && compare > 0) {
-//            node.left = tmp;
-//            tmp.parent = node;
-//            System.out.println("Parent " + node.getData() + " left child " + node.left.getData());
+//        if(node.getLeft() == null && compare > 0) {
+//            node.setLeft(tmp);
+//            tmp.setParent(node);
+//            System.out.println("Parent " + node.getData() + " left child " + node.getLeft().getData());
 //            return tmp;
-//        } else if(node.right == null && compare < 0) {
-//            node.right = tmp;
-//            tmp.parent = node;
-//            System.out.println("Parent " + node.getData() + " left child " + node.left.getData());
+//        } else if(node.getRight() == null && compare < 0) {
+//            node.setRight(tmp);
+//            tmp.setParent(node);
+//            System.out.println("Parent " + node.getData() + " left child " + node.getLeft().getData());
 //            return tmp;
 //        } else if(node.left != null && compare > 0) {
 //            insert(node.left, data);
@@ -64,12 +64,12 @@
 //        int bf = Y.getBalance();
 //        // Test for imbalance and fix heights
 //        if (bf == -2){ // Left imbalance
-//            if (Y.left.getBalance() == 1)
+//            if (Y.getLeft().getBalance() == 1)
 //                leftRightFix(Y); // Caused by right subtree of left child
 //            else
 //                leftLeftFix(Y); // Caused by left subtree of left child
 //        }else if (bf == 2){ // Right imbalance
-//            if (Y.right.getBalance() == -1)
+//            if (Y.getRight().getBalance() == -1)
 //                rightLeftFix(Y); // Caused by left subtree of right child
 //            else
 //                rightRightFix(Y); // Caused by right subtree of right child
@@ -77,14 +77,14 @@
 //            Y.setHeight();
 //        }
 //
-//        update(Y.parent);
+//        update(Y.getParent());
 //    }
 //
 //    private void leftLeftFix(AVLNode<T> x){
 //        // Avoiding nulls /*Rowaina*/
-//        if(x == null || x.left == null || x.right == null) return;
+//        if(x == null || x.getRight() == null || x.getRight() == null) return;
 //
-//        AVLNode<T> y = x.left;
+//        AVLNode<T> y = x.getLeft();
 //        rotateRight(x);
 //        x.setHeight(); x.setBalance();
 //        y.setHeight(); y.setBalance();
@@ -92,7 +92,7 @@
 //
 //    private void leftRightFix(AVLNode<T> x){
 //        // Avoiding nulls /*Rowaina*/
-//        if(x == null || x.left == null || x.right == null) return;
+//        if(x == null || x. == null || x.right == null) return;
 //
 //        AVLNode<T> y = x.left, z = y.right;
 //        rotateLeft(y); rotateRight(x);
@@ -121,4 +121,4 @@
 //        x.setHeight(); x.setBalance();
 //        y.setHeight(); y.setBalance();
 //    }
-//}
+}
