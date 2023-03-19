@@ -136,9 +136,4 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         y.setHeight(); y.setBalance();
     }
 
-    public void batchInsert(T[] data){
-        for (int i=0 ; i < data.length ; i++) insert(data[i]);
-    }
-
-
 }
