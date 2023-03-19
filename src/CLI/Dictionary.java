@@ -3,6 +3,7 @@ package CLI;
 import Data_Structures.Tree.AVL;
 import Data_Structures.Tree.BST;
 import Data_Structures.Tree.RB;
+import Data_Structures.Tree.TreeType;
 import Service.CLICommands;
 import Service.CommandInvoker;
 import Service.Commands;
@@ -10,13 +11,17 @@ import Service.Commands;
 import java.util.Scanner;
 
 public class Dictionary implements IDictionary {
-    BST<String> BST;
+
+    AVL<String> avl;
+    RB<String> rb;
 
     CommandInvoker invoker = new CommandInvoker();
 
     CLICommands command;
 
     Commands eCommand;
+
+    TreeType treeType = null;
 
     public void startProgram() {
         Scanner sc = new Scanner(System.in);
@@ -26,20 +31,24 @@ public class Dictionary implements IDictionary {
         int option = sc.nextInt();
         initiate(option);
         System.out.println("Please select an option:");
-        System.out.println("1. Insert word");
-        System.out.println("2. Delete word");
-        System.out.println("3. Search word");
-        System.out.println("4. Batch insert");
-        System.out.println("5. Batch delete");
+        System.out.println("1. Insert Word");
+        System.out.println("2. Delete Word");
+        System.out.println("3. Search Word");
+        System.out.println("4. Tree Size");
+        System.out.println("5. Tree Height");
+        System.out.println("6. Batch Insert");
+        System.out.println("7. Batch Delete");
         System.out.println("0. Exit");
         programLoop();
     }
 
     public void initiate(int option) {
         if(option == 1) {
-            this.BST = new AVL<>();
+            this.avl = new AVL<>();
+            this.treeType = TreeType.AVL;
         } else if(option == 2) {
-            this.BST = new RB<>();
+            this.rb = new RB<>();
+            this.treeType = TreeType.RB;
         }
     }
 
@@ -50,6 +59,11 @@ public class Dictionary implements IDictionary {
             int option = sc.nextInt();
             if(setCommand(option) == -1) continue;
             command = invoker.invoke(eCommand);
+            switch (treeType) {
+                case AVL -> command.execute(avl, treeType);
+                case RB -> command.execute(rb, treeType);
+                default -> { }
+            }
         }
     }
 
@@ -67,9 +81,15 @@ public class Dictionary implements IDictionary {
                 eCommand = Commands.SEARCH;
                 break;
             case 4:
-                eCommand = Commands.BATCHINSERT;
+                eCommand = Commands.SIZE;
                 break;
             case 5:
+                eCommand = Commands.HEIGHT;
+                break;
+            case 6:
+                eCommand = Commands.BATCHINSERT;
+                break;
+            case 7:
                 eCommand = Commands.BATCHDELETE;
             default:
                 System.out.println("Invalid input!!");

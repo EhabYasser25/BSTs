@@ -4,6 +4,9 @@ import Data_Structures.Node.AVLNode;
 import Data_Structures.Node.Node;
 import Data_Structures.Node.RBNode;
 
+import java.awt.*;
+import java.util.List;
+
 public class AVL<T extends Comparable<T>> extends BST<T> {
     /**
      * Each tree has its own root, so it is removed from the parent class
@@ -46,19 +49,69 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         return true;
     }
 
-    public boolean delete(T key) {
-        AVLNode<T> node = (AVLNode<T>) super.search(this.root, key);
-        RBNode<T> deletedNode = (RBNode<T>) super.delete(node);
-//        fixDelete(deletedNode);
-        if(deletedNode == this.root)
-            this.root = null;
-        else if(deletedNode.isLeftChild())
-            deletedNode.getParent().setLeft(null);
-        else
-            deletedNode.getParent().setRight(null);
-        if(node != null)
-            size--;
-        return node != null;
+    // The method the client deals with, returns false if value doesn't exist and true if it was successfully removed
+    public boolean delete(T key){
+        AVLNode<T> target = (AVLNode<T>) super.search(this.root,key);
+        if (target == null){ // If the key doesn't exist
+            return false;
+        }
+        update(actualDelete(target)); // Update the parent of the deleted node
+        size--; // Decrement size
+        return true;
+    }
+
+    // Takes reference to node we want to delete and return reference to the parent of the deleted node
+    private AVLNode<T> actualDelete(AVLNode<T> target) {
+        // Check for the node having right or left children
+        boolean noLeft = target.getLeft() == null, noRight = target.getRight() == null;
+        // Recursive case: node has both left and right children
+        if(!noLeft && !noRight){
+            // Get the smallest (leftmost) element of the right subtree
+            AVLNode<T> newTarget = target.getRight();
+            while(newTarget.getLeft() != null) newTarget = newTarget.getLeft();
+            // Copy its data to the node we originally intended to delete
+            target.setData(newTarget.getData());
+            // Run algorithm again on the new target for a base case
+            return actualDelete(newTarget);
+        }
+        // Set reference to parent being returned
+        AVLNode<T> p = target.getParent();
+        // Base case 1: node being deleted is a leaf node
+        if (noLeft && noRight){
+            if (target.isLeftChild()) p.setLeft(null); else p.setRight(null);
+            target.setParent(null);
+            return p;
+        }
+        // Set reference to node replacing the deleted node in the other base cases
+        AVLNode<T> successor;
+        if(noLeft) // Base case 2: node has only a right child
+            successor = target.getRight();
+        else // Base case 3: node only has a left child
+            successor = target.getLeft();
+        // Make parent replace target with successor
+        if (target.isLeftChild()) p.setLeft(successor); else p.setRight(successor);
+        successor.setParent(p); // Set successor's parent to be the target's parent
+        // Disconnect the target
+        target.setParent(null); target.setRight(null);
+        return p; // Return reference to parent node to update it
+    }
+
+    public Point batchInsert(List<T> items) {
+        int found = 0, notFound = 0;
+        for(int i = 0; i < items.size(); i++) {
+            if(insert(items.get(i))) notFound++;
+            else found++;
+        }
+        return new Point(found, notFound);
+    }
+
+    public Point batchDelete(List<T> items) {
+        int found = 0, notFound = 0;
+        for (int i = 0; i < items.size(); i++) {
+            if(delete(items.get(i))) found++;
+            else notFound++;
+        }
+        return new Point(found, notFound);
     }
 
     private void update(AVLNode<T> Y) {
