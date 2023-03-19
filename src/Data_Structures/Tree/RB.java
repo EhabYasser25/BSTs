@@ -4,8 +4,13 @@ import Data_Structures.Node.NilNode;
 import Data_Structures.Node.RBNode;
 
 public class RB<T extends Comparable<T>>  extends BST<T> {
+    /**
+     * Each tree has its own root, so it is removed from the parent class
+     * We can just add it for normal node, but it's preferred to make each tree has its own root!
+     * */
 
     private final RBNode<T> nil = new NilNode<>();
+
     public RB(T data) {
         this.root = new RBNode<>(data);
         this.root.setParent(nil);
@@ -21,7 +26,12 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         if(this.root.getLeft() == null)
             this.root.setLeft(nil);
     }
-    public RB() {}
+    public RB() { }
+
+    public RBNode<T> getRoot(){
+        return (RBNode<T>) this.root;
+    }
+
     public boolean insert(T data) {
         RBNode<T> newNode = new RBNode<>(data);
         newNode.setLeft(nil);
@@ -35,6 +45,7 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         checkAndFix(newNode);
         return true;
     }
+
     public boolean delete(T key) {
         RBNode<T> node = (RBNode<T>) super.search(this.root, key);
         RBNode<T> deletedNode = (RBNode<T>) super.delete(node);
@@ -49,9 +60,7 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             size--;
         return node != null;
     }
-    public RBNode<T> getRoot(){
-        return (RBNode<T>) this.root;
-    }
+
     private void checkAndFix(RBNode<T> node) {
         if(node == this.root || node.getParent() == this.root || node.getParent().isBlack())
             return;
@@ -88,8 +97,7 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         ((RBNode<T>) this.root).setBlack(true);
     }
 
-    private void fixDelete(RBNode<T> node) {
-        RBNode<T> DB = node;
+    private void fixDelete(RBNode<T> DB) {
         if(!DB.isBlack() || DB == root) {
             DB.setBlack(true);
             return;
@@ -123,7 +131,6 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             }
         }
     }
-
     private int getDeleteCase(RBNode<T> DB) {
         System.out.println("node: " + DB.getData());
         if(!DB.getSibling().isBlack())  //when sibling is red
@@ -136,14 +143,12 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             return 4;
         return 0;
     }
-
     private void rotateNear(RBNode<T> DB, RBNode<T> node) {
         if (DB.isLeftChild())
             rotateLeft(node);
         else
             rotateRight(node);
     }
-
     private void rotateFar(RBNode<T> DB, RBNode<T> node) {
         if (DB.isLeftChild())
             rotateRight(node);

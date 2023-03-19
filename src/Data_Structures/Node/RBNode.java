@@ -4,21 +4,19 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
     private boolean black = false;
 
     public RBNode(T data) {
-        super(data);
+        this.setData(data);
     }
-    public RBNode(){}
+    public RBNode() { }
+
     public boolean isBlack() {
         return black;
     }
-
     public void setBlack(boolean black) {
         this.black = black;
     }
-
     public boolean isBlack(RBNode<T> node) {
         return true;
     }
-
     public RBNode<T> getRight(){
         return (RBNode<T>) super.getRight();
     }
@@ -31,15 +29,12 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
     public RBNode<T> getSibling(){
         return (RBNode<T>) super.getSibling();
     }
-
     public RBNode<T> getFarNephew() {
         return (RBNode<T>) super.getFarNephew();
     }
-
     public RBNode<T> getNearNephew() {
         return (RBNode<T>) super.getNearNephew();
     }
-
     public void recolor() {
         this.black = !this.black;
     }
@@ -49,4 +44,5 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
         node.setBlack(this.black);
         this.black = tmp;
     }
+
 }

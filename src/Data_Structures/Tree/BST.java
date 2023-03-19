@@ -1,15 +1,32 @@
 package Data_Structures.Tree;
 import Data_Structures.Node.NilNode;
 import Data_Structures.Node.Node;
+import Data_Structures.Node.RBNode;
 
 public class BST<T extends Comparable<T>> {
     /**
      * Each tree has its own root, so it is removed from the parent class
      * We can just add it for normal node, but it's preferred to make each tree has its own root!
      * */
+
     protected int size;
     protected Node<T> root;
 
+    public BST(T data) {
+        this.root = new Node<>(data);
+        this.root.setParent(null);
+        this.root.setLeft(null);
+        this.root.setRight(null);
+    }
+    public BST(Node<T> root) {
+        this.root = root;
+        if(this.root.getParent() == null)
+            this.root.setParent(null);
+        if(this.root.getRight() == null)
+            this.root.setRight(null);
+        if(this.root.getLeft() == null)
+            this.root.setLeft(null);
+    }
     public BST() { }
 
     public void setSize(int size) {
@@ -162,7 +179,7 @@ public class BST<T extends Comparable<T>> {
         Node<T> grandParent = parent.getParent();
         return rotate(node, parent, grandParent);
     }
-    public int rotate(Node<T> node, Node<T> parent, Node<T> grandParent){
+    protected int rotate(Node<T> node, Node<T> parent, Node<T> grandParent){
         switch (node.compareTo(parent) + parent.compareTo(grandParent)) {
             case -2 -> { // LL case
                 rotateRight(grandParent);
@@ -198,8 +215,7 @@ public class BST<T extends Comparable<T>> {
     private void dfs(Node<T> node) {
         if(node_isNull(node))
             return;
-        System.out.println(node.data);
-
+        System.out.println(node.getData());
         dfs(node.getLeft());
         dfs(node.getRight());
     }

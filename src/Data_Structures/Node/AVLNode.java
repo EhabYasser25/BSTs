@@ -27,19 +27,19 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
         return this.height;
     }
 
-    private void update(Node<T> node) {
-
-    }
-
     public AVLNode<T> getRight(){
         return (AVLNode<T>) super.getRight();
     }
-
     public AVLNode<T> getLeft(){
         return (AVLNode<T>) super.getLeft();
     }
-
     public AVLNode<T> getParent(){
         return (AVLNode<T>) super.getParent();
     }
+    public AVLNode<T> getUncle() {
+        return (AVLNode<T>) super.getUncle();
+    }
+
+    private void update(Node<T> node) { }
+
 }
