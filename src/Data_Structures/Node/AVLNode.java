@@ -1,9 +1,7 @@
 package Data_Structures.Node;
 
 public class AVLNode<T extends Comparable<T>> extends Node<T> {
-    public AVLNode<T> parent = null;
-    public AVLNode<T> left = null;
-    public AVLNode<T> right = null;
+
     private int height = 0;
     private int balance = 0;
 
@@ -16,21 +14,32 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public int setBalance() {
-        int lh = (left == null)? -1 : left.height, rh = (right == null)? -1 : right.height;
-        balance = rh - lh;
-        return balance;
+        this.balance = this.getRight().height-this.getLeft().height;
+        return this.balance;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight() {
-        int lh = (left == null)? -1 : left.height, rh = (right == null)? -1 : right.height;
-        height = Math.max(lh,rh) + 1;
+    public int setHeight() {
+        this.height = Math.max(this.getLeft().height, this.getRight().height) + 1;
+        return this.height;
     }
 
     private void update(Node<T> node) {
 
+    }
+
+    public AVLNode<T> getRight(){
+        return (AVLNode<T>) super.getRight();
+    }
+
+    public AVLNode<T> getLeft(){
+        return (AVLNode<T>) super.getLeft();
+    }
+
+    public AVLNode<T> getParent(){
+        return (AVLNode<T>) super.getParent();
     }
 }

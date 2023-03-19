@@ -1,9 +1,11 @@
 package CLI;
 
-import Data_Structures.Tree.AVLTree;
-import Data_Structures.Tree.RBTree;
+import Data_Structures.Tree.BST;
 import Data_Structures.Tree.TreeType;
-import Service.*;
+import Service.CLICommands;
+import Service.CommandInvoker;
+import Service.Commands;
+import Service.TreeFactory;
 
 import java.util.Scanner;
 
@@ -11,17 +13,13 @@ public class Dictionary implements IDictionary {
 
     TreeFactory factory = new TreeFactory();
 
-    AVLTree<String> avl;
-
-    RBTree<String> rb;
+    BST<String> BST;
 
     CommandInvoker invoker = new CommandInvoker();
 
     CLICommands command;
 
     Commands eCommand;
-
-    TreeType type;
 
     public void startProgram() {
         Scanner sc = new Scanner(System.in);
@@ -41,16 +39,10 @@ public class Dictionary implements IDictionary {
     }
 
     public void initiate(int option) {
-        try {
-            if(option == 1) {
-                this.avl = (AVLTree<String>) this.factory.getTree(TreeType.AVL);
-                this.type = TreeType.AVL;
-            } else if(option == 2) {
-                this.rb = (RBTree<String>) this.factory.getTree(TreeType.RB);
-                this.type = TreeType.RB;
-            }
-        } catch (RuntimeException e) {
-            System.out.println("Tree not supported! ");
+        if(option == 1) {
+            this.BST = this.factory.getTree(TreeType.AVL);
+        } else if(option == 2) {
+            this.BST = this.factory.getTree(TreeType.RB);
         }
     }
 
@@ -61,7 +53,8 @@ public class Dictionary implements IDictionary {
             int option = sc.nextInt();
             if(setCommand(option) == -1) continue;
             command = invoker.invoke(eCommand);
-            command.execute((this.type == TreeType.AVL) ? this.avl : this.rb, type);
+            // TODO command.setData(word, root);
+            command.execute();
         }
     }
 

@@ -1,13 +1,6 @@
 package Service;
 
 import Data_Structures.Node.Node;
-import Data_Structures.Tree.AVLTree;
-import Data_Structures.Tree.RBTree;
-import Data_Structures.Tree.Tree;
-import Data_Structures.Tree.TreeType;
-
-import java.util.List;
-import java.util.Scanner;
 
 public class CommandInvoker {
 
@@ -33,107 +26,74 @@ public class CommandInvoker {
     }
 }
 
-class Search implements CLICommands {
+abstract class OneOperation {
     private String word;
-    private Scanner sc = new Scanner(System.in);
-    @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        System.out.print("Enter Word to search: ");
-        this.word = sc.nextLine();
-        if(type == TreeType.AVL) {
-            AVLTree<String> avl = (AVLTree<String>) tree;
-            avl.search(avl.root, this.word);
-        } else if(type == TreeType.RB){
-            RBTree<String> rb = (RBTree<String>) tree;
-            rb.search(rb.root, this.word);
-        }
+    private Node<String> root;
+    public void setData(String word, Node<String> root) {
+        this.word = word;
+        this.root = root;
     }
 
-}
+    public String getWord() {
+        return word;
+    }
 
-class Insert implements CLICommands {
-    private String word;
-    private Scanner sc = new Scanner(System.in);
-    @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        System.out.print("Enter Word to Insert: ");
-        this.word = sc.nextLine();
-        if(type == TreeType.AVL) {
-            AVLTree<String> avl = (AVLTree<String>) tree;
-            avl.insert(this.word);
-        } else if(type == TreeType.RB){
-            RBTree<String> rb = (RBTree<String>) tree;
-            rb.insert(this.word);
-        }
+    public Node<String> getRoot() {
+        return root;
     }
 }
 
-class Delete implements CLICommands {
-    private String word;
-    private Scanner sc = new Scanner(System.in);
+class Search extends OneOperation implements CLICommands {
     @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        System.out.print("Enter Word to delete: ");
-        this.word = sc.nextLine();
-        if(type == TreeType.AVL) {
-            AVLTree<String> avl = (AVLTree<String>) tree;
-            avl.delete(avl.root, this.word);
-        } else if(type == TreeType.RB){
-            RBTree<String> rb = (RBTree<String>) tree;
-            rb.delete(rb.root, this.word);
-        }
+    public void execute() {
+
     }
 }
 
-// TODO merge both insert and delete in one method is possible
+class Insert extends OneOperation implements CLICommands {
+
+    @Override
+    public void execute() {
+
+    }
+}
+
+class Delete extends OneOperation implements CLICommands {
+
+    @Override
+    public void execute() {
+
+    }
+}
+
 class BatchInsert implements CLICommands {
-    private List<String> words;
-    private String path;
-    private Scanner sc = new Scanner(System.in);
+
     @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        System.out.println("Enter File path to the file path: ");
-        this.path = sc.nextLine();
-        FileManager fileReader = new FileManager();
-        this.words = fileReader.readFile(this.path);
-        // TODO call batch insert method and print confirmation message
+    public void execute() {
+
     }
 }
 
 class BatchDelete implements CLICommands {
-    private String path;
-    private List<String> words;
-    private Scanner sc = new Scanner(System.in);
+
     @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        System.out.println("Enter File path to the file path: ");
-        this.path = sc.nextLine();
-        FileManager fileReader = new FileManager();
-        this.words = fileReader.readFile(this.path);
-        // TODO call batch delete method and print confirmation message
+    public void execute() {
+
     }
 }
 
-class Size implements CLICommands {
-    private String word;
+class Size extends OneOperation implements CLICommands {
+
     @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        System.out.println("The size of your tree nodes = " + tree.getSize());
+    public void execute() {
+
     }
 }
 
-class Height implements CLICommands {
-    private String word;
-    private int height;
+class Height extends OneOperation implements CLICommands {
+
     @Override
-    public void execute(Tree<String> tree, TreeType type) {
-        if(type == TreeType.AVL) {
-            AVLTree<String> avl = (AVLTree<String>) tree;
-            this.height = avl.getHeight();
-        } else if(type == TreeType.RB){
-            RBTree<String> rb = (RBTree<String>) tree;
-            this.height = rb.getHeight();
-        }
-        System.out.println("The height of your tree is: " + this.height);
+    public void execute() {
+
     }
 }

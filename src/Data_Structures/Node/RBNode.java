@@ -1,15 +1,12 @@
 package Data_Structures.Node;
 
 public class RBNode<T extends Comparable<T>> extends Node<T> {
-
-   private boolean black = true;
-    public RBNode<T> parent = null;
-    public RBNode<T> left = null;
-    public RBNode<T> right = null;
+    private boolean black = true;
 
     public RBNode(T data) {
         super(data);
     }
+    public RBNode(){}
     public boolean isBlack() {
         return black;
     }
@@ -18,27 +15,38 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
         this.black = black;
     }
 
-    public void recolor() {
-        black = !black;
-    }
-
-    public RBNode<T> getSibling(){
-        if(this.parent == null)
-            return null;
-        return (isLeftChild())? this.parent.right : this.parent.left;
-    }
-
-    public RBNode<T> getUncle() {
-        if(this.parent == null)
-            return null;
-        return this.parent.getSibling();
-    }
-
     public boolean isBlack(RBNode<T> node) {
-        return this.black;
+        return true;
     }
 
+    public RBNode<T> getRight(){
+        return (RBNode<T>) super.getRight();
+    }
+    public RBNode<T> getLeft(){
+        return (RBNode<T>) super.getLeft();
+    }
     public RBNode<T> getParent(){
-        return this.parent;
+        return (RBNode<T>) super.getParent();
+    }
+    public RBNode<T> getSibling(){
+        return (RBNode<T>) super.getSibling();
+    }
+
+    public RBNode<T> getFarNephew() {
+        return (RBNode<T>) super.getFarNephew();
+    }
+
+    public RBNode<T> getNearNephew() {
+        return (RBNode<T>) super.getNearNephew();
+    }
+
+    public void recolor() {
+        this.black = !this.black;
+    }
+
+    public void swapColors(RBNode<T> node) {
+        boolean tmp = node.isBlack();
+        node.setBlack(this.black);
+        this.black = tmp;
     }
 }
