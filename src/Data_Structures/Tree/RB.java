@@ -22,23 +22,31 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             this.root.setLeft(nil);
     }
     public RB() {}
-    public RBNode<T> insert(T data) {
+    public boolean insert(T data) {
         RBNode<T> newNode = new RBNode<>(data);
-        newNode.setBlack(false);
-        super.insert(this.root, null, newNode);
         newNode.setLeft(nil);
         newNode.setRight(nil);
+        if(node_isNull(this.root)){
+            this.root = newNode;
+            return true;
+        }
+        if(node_isNull(super.insert(this.root, null, newNode)))
+            return false;
         checkAndFix(newNode);
-        return newNode;
+        return true;
     }
     public boolean delete(T key) {
-        RBNode<T> node = (RBNode<T>) super.search(key);
+        RBNode<T> node = (RBNode<T>) super.search(this.root, key);
         RBNode<T> deletedNode = (RBNode<T>) super.delete(node);
         fixDelete(deletedNode);
-        if(deletedNode.isLeftChild())
+        if(deletedNode == this.root)
+            this.root = null;
+        else if(deletedNode.isLeftChild())
             deletedNode.getParent().setLeft(nil);
         else
             deletedNode.getParent().setRight(nil);
+        if(node != null)
+            size--;
         return node != null;
     }
     public RBNode<T> getRoot(){
@@ -57,7 +65,7 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         RBNode<T> parent = node.getParent();
         RBNode<T> grandParent = node.getParent().getParent();
         parent.setBlack(true);
-        ((RBNode<T>) parent.getSibling()).setBlack(true);
+        parent.getSibling().setBlack(true);
         grandParent.setBlack(false);
         checkAndFix(grandParent);
     }
@@ -65,24 +73,22 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         RBNode<T> parent = node.getParent();
         RBNode<T> grandParent = parent.getParent();
         int rotateType = rotate(node, parent, grandParent);
-        switch (rotateType){
-            case 1:
-            case 0:
+        switch (rotateType) {
+            case 1, 0 -> {
                 node.setBlack(false);
                 parent.setBlack(true);
                 grandParent.setBlack(false);
-                break;
-            case 2:
-            case 3:
+            }
+            case 2, 3 -> {
                 node.setBlack(true);
                 parent.setBlack(false);
                 grandParent.setBlack(false);
-                break;
+            }
         }
         ((RBNode<T>) this.root).setBlack(true);
     }
 
-    public void fixDelete(RBNode<T> node) {
+    private void fixDelete(RBNode<T> node) {
         RBNode<T> DB = node;
         if(!DB.isBlack() || DB == root) {
             DB.setBlack(true);
@@ -90,35 +96,35 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         }
         int deleteCase = getDeleteCase(DB);
         switch (deleteCase) {
-            case 1:  //when sibling is red
+            case 1 -> {  //when sibling is red
                 DB.getParent().recolor();
                 DB.getSibling().recolor();
                 rotateNear(DB, DB.getParent());
                 System.out.println("case 1");
                 fixDelete(DB);
-                break;
-            case 2:  //when both sibling's children are black
+            }
+            case 2 -> {  //when both sibling's children are black
                 DB.getSibling().recolor();
                 System.out.println("case 2");
                 fixDelete(DB.getParent());
-                break;
-            case 3:  //when sibling's far child is red
+            }
+            case 3 -> {  //when sibling's far child is red
                 DB.getParent().swapColors(DB.getSibling());
                 DB.getFarNephew().recolor();
                 rotateNear(DB, DB.getParent());
                 System.out.println("case 3");
-                break;
-            case 4:  //when sibling's near child is red and far child is black
+            }
+            case 4 -> {  //when sibling's near child is red and far child is black
                 DB.getSibling().recolor();
                 DB.getNearNephew().recolor();
                 rotateFar(DB, DB.getSibling());
                 System.out.println("case 4");
                 fixDelete(DB);
-                break;
+            }
         }
     }
 
-    public int getDeleteCase(RBNode<T> DB) {
+    private int getDeleteCase(RBNode<T> DB) {
         System.out.println("node: " + DB.getData());
         if(!DB.getSibling().isBlack())  //when sibling is red
             return 1;
@@ -131,14 +137,14 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         return 0;
     }
 
-    public void rotateNear(RBNode<T> DB, RBNode<T> node) {
+    private void rotateNear(RBNode<T> DB, RBNode<T> node) {
         if (DB.isLeftChild())
             rotateLeft(node);
         else
             rotateRight(node);
     }
 
-    public void rotateFar(RBNode<T> DB, RBNode<T> node) {
+    private void rotateFar(RBNode<T> DB, RBNode<T> node) {
         if (DB.isLeftChild())
             rotateRight(node);
         else

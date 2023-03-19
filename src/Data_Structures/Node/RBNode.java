@@ -1,7 +1,7 @@
 package Data_Structures.Node;
 
 public class RBNode<T extends Comparable<T>> extends Node<T> {
-    private boolean black = true;
+    private boolean black = false;
 
     public RBNode(T data) {
         super(data);

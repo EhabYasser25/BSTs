@@ -42,7 +42,7 @@ public class Node<T extends Comparable<T>>{
     }
 
     public T getData() {
-            return data;
+        return data;
     }
 
     public void setData(T data){

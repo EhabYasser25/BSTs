@@ -1,6 +1,4 @@
 package Data_Structures.Tree;
-
-import Data_Structures.Node.AVLNode;
 import Data_Structures.Node.NilNode;
 import Data_Structures.Node.Node;
 
@@ -10,11 +8,9 @@ public class BST<T extends Comparable<T>> {
      * We can just add it for normal node, but it's preferred to make each tree has its own root!
      * */
     protected int size;
-    public Node<T> root;
+    protected Node<T> root;
 
-    public BST() {
-
-    }
+    public BST() { }
 
     public void setSize(int size) {
         this.size = size;
@@ -24,12 +20,15 @@ public class BST<T extends Comparable<T>> {
         return size;
     }
 
-    public Node<T> search(T data) {
-        return search(this.root, data);
+    public Node<T> getRoot(){
+        return this.root;
     }
 
-    private Node<T> search(Node<T> current, T data){
+    public boolean search(T data) {
+        return !node_isNull(search(this.root, data));
+    }
 
+    protected Node<T> search(Node<T> current, T data){
         if(current == null)
             return null;
 
@@ -43,47 +42,48 @@ public class BST<T extends Comparable<T>> {
             return search(current.getLeft(), data);
     }
 
-    public Node<T> insert(T data){
+    public boolean insert(T data){
         Node<T> newNode = new Node<>(data);
-        insert(root, null, newNode);
-        return newNode;
+        if(node_isNull(this.root)) {
+            this.root = newNode;
+            return true;
+        }
+        return !node_isNull(insert(this.root, null, newNode));
     }
 
     protected Node<T> insert(Node<T> node, Node<T> parent, Node<T> newNode) {
-        if(this.root == null) {
-            this.root = newNode;
-        }
         if(node_isNull(node)) {
-            node = newNode;
-            node.setParent(parent);
+            newNode.setParent(parent);
+            if(parent.compareTo(newNode) > 0)
+                parent.setLeft(newNode);
+            else if(parent.compareTo(newNode) < 0)
+                parent.setRight(newNode);
             size++;
-            return node;
+            return newNode;
         }
         if(node.compareTo(newNode) > 0)
-            node.setLeft(insert(node.getLeft(), node, newNode));
+            return insert(node.getLeft(), node, newNode);
         else if(node.compareTo(newNode) < 0)
-            node.setRight(insert(node.getRight(), node, newNode));
-        else {
-            //TODO when node is found
-        }
-        return node;
-    }
-
-    public Node<T> getRoot(){
-        return this.root;
+            return insert(node.getRight(), node, newNode);
+        else
+            return null;
     }
 
     public boolean delete(T key) {
-        Node<T> node = search(key);
+        Node<T> node = search(this.root, key);
         Node<T> deletedNode = delete(node);
-        if(deletedNode.isLeftChild())
+        if(deletedNode == this.root)
+            this.root = null;
+        else if(deletedNode.isLeftChild())
             deletedNode.getParent().setLeft(null);
         else
             deletedNode.getParent().setRight(null);
+        if(node != null)
+            size--;
         return node != null;
     }
 
-    public Node<T> delete(Node<T> node) {
+    protected Node<T> delete(Node<T> node) {
         Node<T> tmp;
         if(node == null)
             return null;
@@ -120,7 +120,7 @@ public class BST<T extends Comparable<T>> {
         return current;
     }
 
-    public void rotateRight(Node<T> X) {
+    protected void rotateRight(Node<T> X) {
         Node<T> Y = X.getLeft(); // Get reference to Y
         // Fix X's parent links
         replace(X,Y);
@@ -132,7 +132,7 @@ public class BST<T extends Comparable<T>> {
         X.setParent(Y); // Y becomes X's parent
     }
 
-    public void rotateLeft(Node<T> X) {
+    protected void rotateLeft(Node<T> X) {
         Node<T> Y = X.getRight(); // Get reference to Y
         // Fix X's parent links
         replace(X,Y);
@@ -157,29 +157,33 @@ public class BST<T extends Comparable<T>> {
         else    // A was the getRight() child
             P.setRight(B); // B is now the getRight() child
     }
-    public int rotate_from_grandChild(Node<T> node){
+    protected int rotate_from_grandChild(Node<T> node){
         Node<T> parent = node.getParent();
         Node<T> grandParent = parent.getParent();
         return rotate(node, parent, grandParent);
     }
     public int rotate(Node<T> node, Node<T> parent, Node<T> grandParent){
-        switch (node.compareTo(parent) + parent.compareTo(grandParent)){
-            case -2: // LL case
+        switch (node.compareTo(parent) + parent.compareTo(grandParent)) {
+            case -2 -> { // LL case
                 rotateRight(grandParent);
                 return 0;
-            case 2:// RR case
+            }
+            case 2 -> {// RR case
                 rotateLeft(grandParent);
                 return 1;
+            }
         }
-        switch (grandParent.compareTo(node)){
-            case 1:// LR case
+        switch (grandParent.compareTo(node)) {
+            case 1 -> {// LR case
                 rotateLeft(grandParent.getLeft());
                 rotateRight(grandParent);
                 return 2;
-            case -1:// RL case
+            }
+            case -1 -> {// RL case
                 rotateRight(grandParent.getRight());
                 rotateLeft(grandParent);
                 return 3;
+            }
         }
         return -1;
     }
@@ -191,7 +195,7 @@ public class BST<T extends Comparable<T>> {
             bfs(this.root);
     }
 
-    public void dfs(Node<T> node) {
+    private void dfs(Node<T> node) {
         if(node_isNull(node))
             return;
         System.out.println(node.data);
@@ -200,11 +204,11 @@ public class BST<T extends Comparable<T>> {
         dfs(node.getRight());
     }
 
-    public void bfs(Node<T> root) {
+    private void bfs(Node<T> node) {
         System.out.println("bfs");
     }
 
-    public boolean node_isNull(Node<T> node){
+    protected boolean node_isNull(Node<T> node){
         return node == null || node instanceof NilNode<T>;
     }
 
