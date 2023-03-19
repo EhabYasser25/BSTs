@@ -8,7 +8,7 @@ public class BST<T extends Comparable<T>> {
      * We can just add it for normal node, but it's preferred to make each tree has its own root!
      * */
 
-    protected int size = 1;
+    protected int size = 0;
     protected Node<T> root;
 
     protected int height;
@@ -42,6 +42,12 @@ public class BST<T extends Comparable<T>> {
         return this.root;
     }
 
+    public int getHeight() {
+        //TODO calculate height
+        int height = 0;
+        return height;
+    }
+
     public boolean search(T data) {
         return !node_isNull(search(this.root, data));
     }
@@ -61,9 +67,11 @@ public class BST<T extends Comparable<T>> {
     }
 
     public boolean insert(T data) {
+        System.out.println("This is from BST");
         Node<T> newNode = new Node<>(data);
         if(node_isNull(this.root)) {
             this.root = newNode;
+            size++;
             return true;
         }
         return !node_isNull(insert(this.root, null, newNode));
@@ -116,7 +124,7 @@ public class BST<T extends Comparable<T>> {
         else {
             tmp = getSuccessor(node);
         }
-        node.setData(tmp.getData());
+        node.setData(tmp != null ? tmp.getData() : null);
         return delete(tmp);
     }
 
@@ -203,6 +211,10 @@ public class BST<T extends Comparable<T>> {
         return -1;
     }
 
+    protected boolean node_isNull(Node<T> node){
+        return node == null || node instanceof NilNode<T>;
+    }
+
     public int visit(VisitType visitType) {
         // TODO choose one traverse to find height of RB tree
         if(visitType == VisitType.DFS)
@@ -222,10 +234,6 @@ public class BST<T extends Comparable<T>> {
 
     private void bfs(Node<T> node) {
         System.out.println("bfs");
-    }
-
-    protected boolean node_isNull(Node<T> node){
-        return node == null || node instanceof NilNode<T>;
     }
 
 }

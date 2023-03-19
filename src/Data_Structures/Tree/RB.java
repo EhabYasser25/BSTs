@@ -3,9 +3,6 @@ package Data_Structures.Tree;
 import Data_Structures.Node.NilNode;
 import Data_Structures.Node.RBNode;
 
-import java.awt.*;
-import java.util.List;
-
 public class RB<T extends Comparable<T>>  extends BST<T> {
     /**
      * Each tree has its own root, so it is removed from the parent class
@@ -35,12 +32,18 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         return (RBNode<T>) this.root;
     }
 
+    public int getHeight() {
+        return super.getHeight();
+    }
+
     public boolean insert(T data) {
+        System.out.println("This is from RB");
         RBNode<T> newNode = new RBNode<>(data);
         newNode.setLeft(nil);
         newNode.setRight(nil);
         if(node_isNull(this.root)){
             this.root = newNode;
+            size++;
             return true;
         }
         if(node_isNull(super.insert(this.root, null, newNode)))
@@ -159,25 +162,4 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             rotateLeft(node);
     }
 
-    public int getHeight() {
-        return super.visit(VisitType.DFS);
-    }
-
-    public Point batchInsert(List<T> items) {
-        int found = 0, notFound = 0;
-        for(int i = 0; i < items.size(); i++) {
-            if(insert(items.get(i))) notFound++;
-            else found++;
-        }
-        return new Point(found, notFound);
-    }
-
-    public Point batchDelete(List<T> items) {
-        int found = 0, notFound = 0;
-        for (int i = 0; i < items.size(); i++) {
-            if(delete(items.get(i))) found++;
-            else notFound++;
-        }
-        return new Point(found, notFound);
-    }
 }

@@ -14,9 +14,6 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
     public void setBlack(boolean black) {
         this.black = black;
     }
-    public boolean isBlack(RBNode<T> node) {
-        return true;
-    }
     public RBNode<T> getRight(){
         return (RBNode<T>) super.getRight();
     }

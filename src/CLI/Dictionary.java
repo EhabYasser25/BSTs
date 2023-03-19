@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class Dictionary implements IDictionary {
 
+    BST<String> bst;
     AVL<String> avl;
     RB<String> rb;
 
@@ -53,16 +54,17 @@ public class Dictionary implements IDictionary {
     }
 
     public void programLoop() {
+        int option = -1;
         Scanner sc = new Scanner(System.in);
-        while(true) {
+        while(option != 0) {
             System.out.print("> ");
-            int option = sc.nextInt();
+            option = sc.nextInt();
             if(setCommand(option) == -1) continue;
             command = invoker.invoke(eCommand);
             switch (treeType) {
-                case AVL -> command.execute(avl, treeType);
-                case RB -> command.execute(rb, treeType);
-                default -> { }
+                case BST -> command.execute(bst);
+                case AVL -> command.execute(avl);
+                case RB -> command.execute(rb);
             }
         }
     }
@@ -104,7 +106,7 @@ public class Dictionary implements IDictionary {
         System.out.println("               \\\\  _\\, y | \\//");
         System.out.println("         _\\_.___\\\\, \\\\/ -.\\||");
         System.out.println("           `7-,--.`._||  / / ,");
-        System.out.println("           /'     `-. `./ / |/_.\'");
+        System.out.println("           /'     `-. `./ / |/_.'");
         System.out.println("                     |    |//");
         System.out.println("                     |_    /");
         System.out.println("                     |-   |");

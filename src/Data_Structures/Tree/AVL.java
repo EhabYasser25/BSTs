@@ -1,11 +1,6 @@
 package Data_Structures.Tree;
 
 import Data_Structures.Node.AVLNode;
-import Data_Structures.Node.Node;
-import Data_Structures.Node.RBNode;
-
-import java.awt.*;
-import java.util.List;
 
 public class AVL<T extends Comparable<T>> extends BST<T> {
     /**
@@ -38,9 +33,11 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
     }
 
     public boolean insert(T data) {
+        System.out.println("This is from AVL");
         AVLNode<T> newNode = new AVLNode<>(data);
         if(node_isNull(this.root)){
             this.root = newNode;
+            size++;
             return true;
         }
         if(node_isNull(super.insert(this.root, null, newNode)))
@@ -94,24 +91,6 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         // Disconnect the target
         target.setParent(null); target.setRight(null);
         return p; // Return reference to parent node to update it
-    }
-
-    public Point batchInsert(List<T> items) {
-        int found = 0, notFound = 0;
-        for(int i = 0; i < items.size(); i++) {
-            if(insert(items.get(i))) notFound++;
-            else found++;
-        }
-        return new Point(found, notFound);
-    }
-
-    public Point batchDelete(List<T> items) {
-        int found = 0, notFound = 0;
-        for (int i = 0; i < items.size(); i++) {
-            if(delete(items.get(i))) found++;
-            else notFound++;
-        }
-        return new Point(found, notFound);
     }
 
     private void update(AVLNode<T> Y) {
