@@ -111,7 +111,7 @@ public class BST<T extends Comparable<T>> {
         return current;
     }
 
-    private Node<T> getPredeccessor(Node<T> node){
+    private Node<T> getPredecessor(Node<T> node){
         Node<T> current = node.getLeft();
         if(node_isNull(current))
             return null;
