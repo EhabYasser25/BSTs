@@ -1,7 +1,6 @@
 package Data_Structures.Tree;
 import Data_Structures.Node.NilNode;
 import Data_Structures.Node.Node;
-import Data_Structures.Node.RBNode;
 
 public class BST<T extends Comparable<T>> {
     /**
@@ -137,7 +136,7 @@ public class BST<T extends Comparable<T>> {
         return current;
     }
 
-    public void rotateRight(Node<T> X) {
+    protected void rotateRight(Node<T> X) {
         Node<T> Y = X.getLeft(), YChild = Y.getRight(); // Get reference to Y and its right child
         // Fix X's parent links
         replace(X,Y);
@@ -148,7 +147,7 @@ public class BST<T extends Comparable<T>> {
         Y.setRight(X); // X becomes Y's getRight() child
         X.setParent(Y); // Y becomes X's parent
     }
-    public void rotateLeft(Node<T> X) {
+    protected void rotateLeft(Node<T> X) {
         Node<T> Y = X.getRight(), YChild = Y.getLeft(); // Get reference to Y and its left child
         // Fix X's parent links
         replace(X,Y);

@@ -61,36 +61,7 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         return node != null;
     }
 
-//    public AVLNode<T> insert(AVLNode<T> node,T data) {
-//        //insert data in its place in bst
-//        AVLNode<T> tmp = new AVLNode<T>(data);
-//        if(node == null){
-//            node = tmp;
-//            return node;
-//        }
-//        int compare = node.getData().compareTo(data);
-//        if(node.getLeft() == null && compare > 0) {
-//            node.setLeft(tmp);
-//            tmp.setParent(node);
-//            System.out.println("Parent " + node.getData() + " left child " + node.getLeft().getData());
-//            return tmp;
-//        } else if(node.getRight() == null && compare < 0) {
-//            node.setRight(tmp);
-//            tmp.setParent(node);
-//            System.out.println("Parent " + node.getData() + " left child " + node.getLeft().getData());
-//            return tmp;
-//        } else if(node.left != null && compare > 0) {
-//            insert(node.left, data);
-//        } else if(node.right != null && compare < 0) {
-//            insert(node.right, data);
-//        } else if((node.left != null && node.left.getData().compareTo(data) == 0) || (node.right != null && node.right.getData().compareTo(data) == 0)) {
-//            System.out.println("Found!!\n");
-//            return null;
-//        }
-//        return tmp;
-//    }
-
-    public void update(AVLNode<T> Y) {
+    private void update(AVLNode<T> Y) {
         if (Y == null) return;
         int bf = Y.setBalance();
         // Test for imbalance and fix heights
