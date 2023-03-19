@@ -6,4 +6,3 @@ import Data_Structures.Tree.TreeType;
 public interface CLICommands {
     public void execute(BST<String> tree, TreeType type);
 }
-

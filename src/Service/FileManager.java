@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class FileManager {
     public List<String> readFile(String path) {
         List<String> words = new ArrayList<>();

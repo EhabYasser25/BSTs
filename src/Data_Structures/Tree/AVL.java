@@ -1,6 +1,7 @@
 package Data_Structures.Tree;
 
 import Data_Structures.Node.AVLNode;
+import Data_Structures.Node.Node;
 import Data_Structures.Node.RBNode;
 
 public class AVL<T extends Comparable<T>> extends BST<T> {
@@ -41,7 +42,7 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         }
         if(node_isNull(super.insert(this.root, null, newNode)))
             return false;
-        update(newNode);
+        update(newNode.getParent());
         return true;
     }
 
@@ -89,10 +90,9 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
 //        return tmp;
 //    }
 
-    private void update(AVLNode<T> Y) {
+    public void update(AVLNode<T> Y) {
         if (Y == null) return;
-        Y.setBalance();
-        int bf = Y.getBalance();
+        int bf = Y.setBalance();
         // Test for imbalance and fix heights
         if (bf == -2){ // Left imbalance
             if (Y.getLeft().getBalance() == 1)
@@ -134,6 +134,22 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         rotateLeft(x);
         x.setHeight(); x.setBalance();
         y.setHeight(); y.setBalance();
+    }
+
+    public void printTree(){
+        printPreorder(root);
+        System.out.println();
+    }
+
+    public void batchInsert(T[] data){
+        for (int i=0 ; i < data.length ; i++) insert(data[i]);
+    }
+
+    private void printPreorder(Node n){
+        if (n == null) return;
+        System.out.print(n.getData() + " ");
+        printPreorder(n.getLeft());
+        printPreorder(n.getRight());
     }
 
 }

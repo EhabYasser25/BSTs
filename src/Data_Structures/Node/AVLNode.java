@@ -14,7 +14,9 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public int setBalance() {
-        this.balance = this.getRight().height-this.getLeft().height;
+        int lh = (this.getLeft() == null)? -1 : this.getLeft().height;
+        int rh = (this.getRight() == null)? -1 : this.getRight().height;
+        this.balance = rh-lh;
         return this.balance;
     }
 
@@ -23,7 +25,9 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
     }
 
     public int setHeight() {
-        this.height = Math.max(this.getLeft().height, this.getRight().height) + 1;
+        int lh = (this.getLeft() == null)? -1 : this.getLeft().height;
+        int rh = (this.getRight() == null)? -1 : this.getRight().height;
+        this.height = Math.max(lh,rh) + 1;
         return this.height;
     }
 
@@ -39,7 +43,5 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
     public AVLNode<T> getUncle() {
         return (AVLNode<T>) super.getUncle();
     }
-
-    private void update(Node<T> node) { }
 
 }

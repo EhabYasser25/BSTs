@@ -137,38 +137,35 @@ public class BST<T extends Comparable<T>> {
         return current;
     }
 
-    protected void rotateRight(Node<T> X) {
-        Node<T> Y = X.getLeft(); // Get reference to Y
+    public void rotateRight(Node<T> X) {
+        Node<T> Y = X.getLeft(), YChild = Y.getRight(); // Get reference to Y and its right child
         // Fix X's parent links
         replace(X,Y);
         // Fix Y's getRight() child links
-        X.setLeft(Y.getRight()); // X replaces its getLeft() child with Y's getRight() child
-        Y.getRight().setParent(X); // Y's getRight() child points to X as its new parent
+        X.setLeft(YChild); // X replaces its getLeft() child with Y's getRight() child
+        if (YChild != null) YChild.setParent(X); // if it isn't null, Y's getRight() child points to X as its new parent
         // Fix X's links
         Y.setRight(X); // X becomes Y's getRight() child
         X.setParent(Y); // Y becomes X's parent
     }
-
-    protected void rotateLeft(Node<T> X) {
-        Node<T> Y = X.getRight(); // Get reference to Y
+    public void rotateLeft(Node<T> X) {
+        Node<T> Y = X.getRight(), YChild = Y.getLeft(); // Get reference to Y and its left child
         // Fix X's parent links
         replace(X,Y);
         // Fix Y's getLeft() child links
-        X.setRight(Y.getLeft()); // X replaces its getRight() child with Y's getLeft() child
-        Y.getLeft().setParent(X); // Y's getLeft() child points to X as its new parent
+        X.setRight(YChild); // X replaces its getRight() child with Y's getLeft() child
+        if (YChild != null) Y.getLeft().setParent(X); // if it isn't null, Y's getLeft() child points to X as its new parent
         // Fix X's links
         Y.setLeft(X); // X becomes Y's getLeft() child
         X.setParent(Y); // Y becomes X's parent
     }
-
     private void replace(Node<T> A, Node<T> B) { // Make A's parent B's parent
         Node<T> P = A.getParent(); // Get reference to A's parent
         B.setParent(P); // B's parent reference points to A's parent
-        if(A == this.root){
+        if(A == this.root){ // If A was the root, B will replace it
             this.root = B;
             return;
         }
-
         if (A == P.getLeft()) // A was the getLeft() child
             P.setLeft(B); // B is now the getLeft() child
         else    // A was the getRight() child
