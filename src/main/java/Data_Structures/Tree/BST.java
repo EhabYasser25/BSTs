@@ -43,9 +43,12 @@ public class BST<T extends Comparable<T>> {
     }
 
     public int getHeight() {
-        //TODO calculate height
-        int height = 0;
-        return height;
+        return recursiveHeight(this.root);
+    }
+
+    private int recursiveHeight(Node<T> n){
+        if (node_isNull(n)) return -1;
+        return Math.max( recursiveHeight(n.getLeft()) ,  recursiveHeight(n.getRight())) + 1;
     }
 
     public boolean search(T data) {

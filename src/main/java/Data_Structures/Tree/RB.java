@@ -37,7 +37,6 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
     }
 
     public boolean insert(T data) {
-        System.out.println("This is from RB");
         RBNode<T> newNode = new RBNode<>(data);
         newNode.setLeft(nil);
         newNode.setRight(nil);
@@ -54,6 +53,8 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
 
     public boolean delete(T key) {
         RBNode<T> node = (RBNode<T>) super.search(this.root, key);
+        if(node == null)
+            return false;
         RBNode<T> deletedNode = (RBNode<T>) super.delete(node);
         fixDelete(deletedNode);
         if(deletedNode == this.root)
@@ -114,31 +115,26 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
                 DB.getParent().recolor();
                 DB.getSibling().recolor();
                 rotateNear(DB, DB.getParent());
-                System.out.println("case 1");
                 fixDelete(DB);
             }
             case 2 -> {  //when both sibling's children are black
                 DB.getSibling().recolor();
-                System.out.println("case 2");
                 fixDelete(DB.getParent());
             }
             case 3 -> {  //when sibling's far child is red
                 DB.getParent().swapColors(DB.getSibling());
                 DB.getFarNephew().recolor();
                 rotateNear(DB, DB.getParent());
-                System.out.println("case 3");
             }
             case 4 -> {  //when sibling's near child is red and far child is black
                 DB.getSibling().recolor();
                 DB.getNearNephew().recolor();
                 rotateFar(DB, DB.getSibling());
-                System.out.println("case 4");
                 fixDelete(DB);
             }
         }
     }
     private int getDeleteCase(RBNode<T> DB) {
-        System.out.println("node: " + DB.getData());
         if(!DB.getSibling().isBlack())  //when sibling is red
             return 1;
         else if(DB.getNearNephew().isBlack() && DB.getFarNephew().isBlack())  //when both sibling's children are black

@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class CommandInvoker {
 
+
     public CLICommands invoke(Commands command) {
         return switch (command) {
             case SEARCH -> new Search();

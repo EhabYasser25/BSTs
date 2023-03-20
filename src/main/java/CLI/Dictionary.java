@@ -1,9 +1,6 @@
 package CLI;
 
-import Data_Structures.Tree.AVL;
-import Data_Structures.Tree.BST;
-import Data_Structures.Tree.RB;
-import Data_Structures.Tree.TreeType;
+import Data_Structures.Tree.*;
 import Service.CLICommands;
 import Service.CommandInvoker;
 import Service.Commands;
@@ -34,11 +31,11 @@ public class Dictionary implements IDictionary {
         System.out.println("Please select an option:");
         System.out.println("1. Insert Word");
         System.out.println("2. Delete Word");
-        System.out.println("3. Search Word");
-        System.out.println("4. Tree Size");
-        System.out.println("5. Tree Height");
-        System.out.println("6. Batch Insert");
-        System.out.println("7. Batch Delete");
+        System.out.println("3. Batch Insert");
+        System.out.println("4. Batch Delete");
+        System.out.println("5. Search");
+        System.out.println("6. Size");
+        System.out.println("7. Height");
         System.out.println("0. Exit");
         programLoop();
     }
@@ -61,42 +58,28 @@ public class Dictionary implements IDictionary {
             option = sc.nextInt();
             if(setCommand(option) == -1) continue;
             command = invoker.invoke(eCommand);
+
             switch (treeType) {
                 case BST -> command.execute(bst);
                 case AVL -> command.execute(avl);
                 case RB -> command.execute(rb);
+                default -> System.out.println("Tree type not supported!");
+            }
+            switch (treeType) {
+                case BST -> bst.visit(VisitType.DFS);
+                case AVL -> avl.visit(VisitType.DFS);
+                case RB -> rb.visit(VisitType.DFS);
             }
         }
     }
 
     public int setCommand(int option) {
-        switch (option) {
-            case 0:
-                System.exit(0);
-            case 1:
-                eCommand = Commands.INSERT;
-                break;
-            case 2:
-                eCommand = Commands.DELETE;
-                break;
-            case 3:
-                eCommand = Commands.SEARCH;
-                break;
-            case 4:
-                eCommand = Commands.SIZE;
-                break;
-            case 5:
-                eCommand = Commands.HEIGHT;
-                break;
-            case 6:
-                eCommand = Commands.BATCHINSERT;
-                break;
-            case 7:
-                eCommand = Commands.BATCHDELETE;
-            default:
-                System.out.println("Invalid input!!");
-                return -1;
+        if (option == 0) System.exit(0);
+        if (option > 7 || option < 0){
+            System.out.println("Invalid input!!");
+            return -1;
         }
+        eCommand = Commands.values()[option-1];
         return 0;
     }
 
