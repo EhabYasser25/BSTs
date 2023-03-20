@@ -2,6 +2,8 @@ package Data_Structures.Tree;
 import Data_Structures.Node.NilNode;
 import Data_Structures.Node.Node;
 
+import java.util.ArrayList;
+
 public class BST<T extends Comparable<T>> {
     /**
      * Each tree has its own root, so it is removed from the parent class
@@ -52,6 +54,8 @@ public class BST<T extends Comparable<T>> {
     }
 
     public boolean search(T data) {
+        if(data == null)
+            return false;
         return !node_isNull(search(this.root, data));
     }
 
@@ -69,7 +73,7 @@ public class BST<T extends Comparable<T>> {
             return search(current.getLeft(), data);
     }
 
-    public boolean insert(T data) {
+    public boolean insert(T data){
         System.out.println("This is from BST");
         Node<T> newNode = new Node<>(data);
         if(node_isNull(this.root)) {
@@ -218,21 +222,23 @@ public class BST<T extends Comparable<T>> {
         return node == null || node instanceof NilNode<T>;
     }
 
-    public int visit(VisitType visitType) {
+    public ArrayList<T> visit(VisitType visitType) {
         // TODO choose one traverse to find height of RB tree
+        ArrayList<T> valuesList = new ArrayList<>();
         if(visitType == VisitType.DFS)
-            dfs(this.root);
+            dfs(this.root, valuesList);
         else if(visitType == VisitType.BFS)
             bfs(this.root);
-        return height;
+        return valuesList;
     }
 
-    private void dfs(Node<T> node) {
-        if(node_isNull(node))
-            return;
-        System.out.println(node.getData());
-        dfs(node.getLeft());
-        dfs(node.getRight());
+    private T dfs(Node<T> node, ArrayList<T> values) {
+        if(!node_isNull(node.getLeft()))
+            dfs(node.getLeft(), values);
+        values.add(node.getData());
+        if(!node_isNull(node.getRight()))
+            dfs(node.getRight(), values);
+        return node.getData();
     }
 
     private void bfs(Node<T> node) {

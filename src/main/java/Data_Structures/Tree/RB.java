@@ -13,14 +13,12 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
 
     public RB(T data) {
         this.root = new RBNode<>(data);
-        this.root.setParent(nil);
         this.root.setLeft(nil);
         this.root.setRight(nil);
+        this.size++;
     }
     public RB(RBNode<T> root) {
         this.root = root;
-        if(this.root.getParent() == null)
-            this.root.setParent(nil);
         if(this.root.getRight() == null)
             this.root.setRight(nil);
         if(this.root.getLeft() == null)
@@ -36,11 +34,14 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         return super.getHeight();
     }
 
-    public boolean insert(T data) {
+    public boolean insert(T data){
+        if(data == null)
+            return false;
         RBNode<T> newNode = new RBNode<>(data);
         newNode.setLeft(nil);
         newNode.setRight(nil);
         if(node_isNull(this.root)){
+            newNode.setBlack(true);
             this.root = newNode;
             size++;
             return true;
@@ -52,6 +53,8 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
     }
 
     public boolean delete(T key) {
+        if(key == null)
+            return false;
         RBNode<T> node = (RBNode<T>) super.search(this.root, key);
         if(node == null)
             return false;
@@ -63,9 +66,9 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             deletedNode.getParent().setLeft(nil);
         else
             deletedNode.getParent().setRight(nil);
-        if(node != null)
-            size--;
-        return node != null;
+        size--;
+        this.getRoot().setBlack(true);
+        return true;
     }
 
     private void checkAndFix(RBNode<T> node) {

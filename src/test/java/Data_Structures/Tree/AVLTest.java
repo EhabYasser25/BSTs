@@ -9,6 +9,7 @@ class AVLTest extends BST {
 
     @Test
     void test1() {
+
     }
 
     @Test
@@ -49,29 +50,4 @@ class AVLTest extends BST {
     void test10() {
     }
 
-    @Test
-    void test11(){
-
-    }
-
-    @Test
-    void test12(){
-    }
-
-    @Test
-    void test13() {
-    }
-
-    @Test
-    void test14() {
-    }
-
-    @Test
-    void test15(){
-
-    }
-
-    @Test
-    void test16(){
-    }
 }
