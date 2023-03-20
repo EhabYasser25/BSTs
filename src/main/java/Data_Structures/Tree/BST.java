@@ -53,7 +53,7 @@ public class BST<T extends Comparable<T>> {
     }
 
     protected Node<T> search(Node<T> current, T data) {
-        if(current == null)
+        if(node_isNull(current))
             return null;
 
         if(current.getData().compareTo(data) < 0){
