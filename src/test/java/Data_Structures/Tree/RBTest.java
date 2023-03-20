@@ -97,7 +97,7 @@ class RBTest extends BST {
         assertTrue(testTree.insert(89.457));
         assertTrue(testTree.insert(49.97));
         assertTrue(testTree.insert(21.2454));
-        assertTrue(testTree.insert( 3.4785));
+        assertTrue(testTree.insert(3.4785));
         assertTrue(testTree.insert(45.35714));
         assertTrue(testTree.insert(49.457));
         assertTrue(testTree.insert(26.78453));
