@@ -33,7 +33,6 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
     }
 
     public boolean insert(T data) {
-        System.out.println("This is from AVL");
         AVLNode<T> newNode = new AVLNode<>(data);
         if(node_isNull(this.root)){
             this.root = newNode;

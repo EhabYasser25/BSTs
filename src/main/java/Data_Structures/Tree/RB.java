@@ -3,6 +3,8 @@ package Data_Structures.Tree;
 import Data_Structures.Node.NilNode;
 import Data_Structures.Node.RBNode;
 
+import java.util.ArrayList;
+
 public class RB<T extends Comparable<T>>  extends BST<T> {
     /**
      * Each tree has its own root, so it is removed from the parent class
@@ -159,6 +161,22 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
             rotateRight(node);
         else
             rotateLeft(node);
+    }
+
+    public ArrayList<Integer> coloredDFS() {
+        ArrayList<Integer> colors = new ArrayList<>();
+        recursiveColoredDFS((RBNode<T>)this.root, colors);
+        return colors;
+    }
+
+    private void recursiveColoredDFS(RBNode<T> node, ArrayList<Integer> colors) {
+        if(node instanceof NilNode<T>)
+            return;
+        colors.add(node.isBlack()? 1 : 0);
+//        int color = node.isBlack()? 1 : 0;
+//        System.out.print(node.getData() + ": " + color + ",  ");
+        recursiveColoredDFS(node.getLeft(), colors);
+        recursiveColoredDFS(node.getRight(), colors);
     }
 
 }
