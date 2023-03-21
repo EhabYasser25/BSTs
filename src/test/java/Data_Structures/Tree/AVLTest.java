@@ -9,12 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AVLTest extends BST {
 
-
     @Test
     void mixed() {
         AVL<Integer> testTree = new AVL<Integer>(9);
 
-        /** INSERTION */
+        /* INSERTION */
         assertFalse(testTree.insert(9)); // insert a node has the same data
         assertTrue(testTree.insert(5));
         assertTrue(testTree.insert(2));  // test LL

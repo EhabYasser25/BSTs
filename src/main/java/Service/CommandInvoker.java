@@ -77,17 +77,7 @@ class Delete implements CLICommands {
         }
         return  (endTime - startTime) / 1000;
     }
-
-    public Point batchInsert(BST<String> tree, List<String> items) {
-        int found = 0, notFound = 0;
-        for (String item : items) {
-            if (tree.insert(item)) notFound++;
-            else found++;
-        }
-        return new Point(found, notFound);
-    }
 }
-
 
 class Size implements CLICommands {
     @Override
