@@ -175,8 +175,6 @@ public class RB<T extends Comparable<T>>  extends BST<T>{
         if(node instanceof NilNode<T>)
             return;
         colors.add(node.isBlack()? 1 : 0);
-//        int color = node.isBlack()? 1 : 0;
-//        System.out.print(node.getData() + ": " + color + ",  ");
         recursiveColoredDFS(node.getLeft(), colors);
         recursiveColoredDFS(node.getRight(), colors);
     }

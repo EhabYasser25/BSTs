@@ -49,42 +49,6 @@ class RBTest extends BST {
     }
 
     @Test
-    void size_focusedTest() {
-        RB<Integer> testTree = new RB<>(42);
-        assertTrue(testTree.insert(102));
-        assertTrue(testTree.insert(101));
-        assertTrue(testTree.insert(33));
-        assertTrue(testTree.insert(10));
-        assertTrue(testTree.insert(4));
-        assertTrue(testTree.insert(72));
-        assertTrue(testTree.insert(20));
-        assertTrue(testTree.insert(9));
-        assertTrue(testTree.insert(16));
-        assertTrue(testTree.insert(8));
-        assertTrue(testTree.insert(90));
-        assertTrue(testTree.insert(-3));
-        assertEquals(testTree.size, 13); //checking for size after large insertion
-
-        assertEquals(new ArrayList<Integer>(Arrays.asList(-3, 4, 8, 9, 10, 16, 20, 33, 42, 72, 90, 101, 102)), testTree.visit(VisitType.DFS));
-        assertFalse(testTree.insert(10)); //trying to insert element that exists
-        assertEquals(testTree.size, 13); //asserting that size didn't change after false insert
-
-        assertFalse(testTree.delete(-100));
-        assertEquals(testTree.size, 13); //asserting that size didn't change after false deletion
-
-        assertTrue(testTree.delete(4));
-        assertTrue(testTree.delete(9));
-        assertTrue(testTree.delete(20));
-        assertTrue(testTree.delete(101));
-        assertTrue(testTree.delete(-3));
-        assertTrue(testTree.delete(33));
-
-        //This should be the inorder ordering of the tree after deletion
-        assertEquals(new ArrayList<Integer>(Arrays.asList(8, 10, 16, 42, 72, 90, 102)), testTree.visit(VisitType.DFS));
-        assertEquals(testTree.size, 7); //asserting the size after large deletion
-    }
-
-    @Test
     void searching_focusedTest(){
         RB<Double> testTree = new RB<>(42.8);
         assertTrue(testTree.insert(44.7));
@@ -126,80 +90,6 @@ class RBTest extends BST {
         assertTrue(testTree.getRoot().isBlack());
         assertFalse(testTree.getRoot().getRight().getLeft().getRight().getLeft().isBlack());
         assertTrue(testTree.getRoot().getLeft().getRight().getLeft().isBlack());
-    }
-
-    @Test
-    void all_focusedTest(){
-        RB<String> testTree = new RB<>();
-        assertTrue(testTree.insert("morning"));
-        assertTrue(testTree.insert("creation"));
-        assertTrue(testTree.insert("sacrifice"));
-        assertTrue(testTree.insert("appear"));
-        assertTrue(testTree.insert("front"));
-        assertTrue(testTree.insert("23.451"));
-        assertTrue(testTree.insert("interrupt"));
-        assertTrue(testTree.insert("pick"));
-        assertTrue(testTree.insert("college"));
-        assertTrue(testTree.insert("fair"));
-        assertTrue(testTree.insert("jealous"));
-
-        assertEquals(testTree.getHeight(), 3);
-
-        assertTrue(testTree.insert( "4.7"));
-        assertTrue(testTree.insert("16.030405"));
-        assertTrue(testTree.insert("flex"));
-
-        assertEquals(testTree.getHeight(), 4);
-
-        assertTrue(testTree.insert("bounce"));
-        assertTrue(testTree.insert("shallow"));
-        assertTrue(testTree.insert("21.245399"));
-
-        assertEquals(testTree.getHeight(), 4);
-        assertEquals(testTree.size, 17); //checking for size after large insertion
-
-        assertTrue(testTree.search("bounce"));
-
-        //This is the final inorder ordering of the tree
-        assertEquals(new ArrayList<String>(Arrays.asList("16.030405", "21.245399", "23.451", "4.7", "appear", "bounce", "college", "creation", "fair", "flex", "front", "interrupt", "jealous", "morning", "pick", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
-
-        assertFalse(testTree.search("software")); //searching for an element that doesn't exist
-
-        //Trying to mass insert elements some of which are in the tree already then checking to be correct
-        assertTrue(testTree.insert("forbid"));
-        assertFalse(testTree.insert("college"));
-        assertTrue(testTree.insert("pin"));
-        assertFalse(testTree.insert("fair"));
-        assertTrue(testTree.insert("hemisphere"));
-        assertTrue(testTree.insert("arena"));
-        assertFalse(testTree.insert("front")); //trying to reinsert the root
-        assertFalse(testTree.insert("bounce")); //trying to insert an existing leaf
-        assertEquals(testTree.size, 21); //check that size didn't change after 3 failed insertion
-
-        //mass deletion then check size
-        assertTrue(testTree.delete("shallow"));
-        assertTrue(testTree.delete("creation"));
-        assertTrue(testTree.delete("jealous"));
-        assertTrue(testTree.delete("front"));
-        assertTrue(testTree.delete("4.7"));
-        assertTrue(testTree.delete("pick"));
-        assertFalse(testTree.search("shallow")); //search for element that just got deleted
-        assertEquals(testTree.size, 15); //check the size after large deletion
-
-        //reinserting elements that were just deleted
-        assertTrue(testTree.insert("front"));
-        assertTrue(testTree.insert("jealous"));
-        assertTrue(testTree.insert("shallow"));
-        assertTrue(testTree.search("shallow"));
-        assertEquals(testTree.size, 18); //check the size after insertion
-
-        assertEquals(new ArrayList<String>(Arrays.asList("16.030405", "21.245399", "23.451", "appear", "arena", "bounce", "college", "fair", "flex", "forbid", "front", "hemisphere", "interrupt", "jealous", "morning", "pin", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
-        assertEquals("hemisphere", testTree.getRoot().getData());
-
-        //checking the colour of some nodes to make sure of the correctness of colours
-        assertFalse(testTree.getRoot().getRight().getLeft().getRight().isBlack());
-        assertFalse(testTree.getRoot().getLeft().getRight().isBlack());
-        assertFalse(testTree.getRoot().getLeft().getRight().getLeft().getLeft().isBlack());
     }
 
     @Test
@@ -256,6 +146,109 @@ class RBTest extends BST {
         assertTrue(testTree.insert(11));
         assertEquals(testTree.getSize(), 24);  //check size
 
+        assertTrue(testTree.delete(31));  //actual delete red node
+        assertTrue(testTree.delete(33));  //actual delete black node that have black sibling and far red nephew
+        assertTrue(testTree.delete(16));  //actual delete black node that have black sibling, far black nephew and near red nephew
+        assertTrue(testTree.delete(17));  //actual delete black node that have black sibling and two black nephews
+        assertTrue(testTree.delete(12));
+        assertTrue(testTree.delete(23));  //actual delete black node that have red sibling
+        assertTrue(testTree.delete(47));  //actual delete black node that have black sibling, far red nephew and near black nephew
+
+        //delete the root
+        assertEquals(testTree.getRoot().getData(), 45);  //check the dat of the root
+        assertTrue(testTree.delete((45)));
+
+        //some further deletions to check many cases
+        assertTrue(testTree.delete((66)));
+        assertTrue(testTree.delete((74)));
+        assertTrue(testTree.delete((84)));
+        assertTrue(testTree.delete((11)));
+        assertTrue(testTree.delete((9)));
+
+        //test size after these deletions
+        assertEquals(testTree.getSize(), 11);
+    }
+
+    @Test
+    void size_focusedTest() {
+        RB<Integer> testTree = new RB<>(42);
+        assertTrue(testTree.insert(102));
+        assertTrue(testTree.insert(101));
+        assertTrue(testTree.insert(33));
+        assertTrue(testTree.insert(10));
+        assertTrue(testTree.insert(4));
+        assertTrue(testTree.insert(72));
+        assertTrue(testTree.insert(20));
+        assertTrue(testTree.insert(9));
+        assertTrue(testTree.insert(16));
+        assertTrue(testTree.insert(8));
+        assertTrue(testTree.insert(90));
+        assertTrue(testTree.insert(-3));
+        assertEquals(testTree.size, 13); //checking for size after large insertion
+
+        assertEquals(new ArrayList<Integer>(Arrays.asList(-3, 4, 8, 9, 10, 16, 20, 33, 42, 72, 90, 101, 102)), testTree.visit(VisitType.DFS));
+        assertFalse(testTree.insert(10)); //trying to insert element that exists
+        assertEquals(testTree.size, 13); //asserting that size didn't change after false insert
+
+        assertFalse(testTree.delete(-100));
+        assertEquals(testTree.size, 13); //asserting that size didn't change after false deletion
+
+        assertTrue(testTree.delete(4));
+        assertTrue(testTree.delete(9));
+        assertTrue(testTree.delete(20));
+        assertTrue(testTree.delete(101));
+        assertTrue(testTree.delete(-3));
+        assertTrue(testTree.delete(33));
+
+        //This should be the inorder ordering of the tree after deletion
+        assertEquals(new ArrayList<Integer>(Arrays.asList(8, 10, 16, 42, 72, 90, 102)), testTree.visit(VisitType.DFS));
+        assertEquals(testTree.size, 7); //asserting the size after large deletion
+    }
+
+    @Test
+    void height_focusedTest() {
+        RB<Integer> testTree = new RB<>();
+
+        //checking height after insertions
+        assertEquals(testTree.getHeight(), -1);
+        assertTrue(testTree.insert(10));
+        assertEquals(testTree.getHeight(),  0);
+        assertTrue(testTree.insert(45));
+        assertEquals(testTree.getHeight(),  1);
+        assertTrue(testTree.insert(47));
+        assertEquals(testTree.getHeight(),  1);
+        assertTrue(testTree.insert(85));
+        assertEquals(testTree.getHeight(),  2);
+        assertTrue(testTree.insert(12));
+        assertEquals(testTree.getHeight(),  2);
+        assertTrue(testTree.insert(90));
+        assertEquals(testTree.getHeight(),  2);
+        assertTrue(testTree.insert(100));
+        assertEquals(testTree.getHeight(),  3);
+        assertTrue(testTree.insert(9));
+        assertEquals(testTree.getHeight(),  3);
+        assertTrue(testTree.insert(84));
+        assertEquals(testTree.getHeight(),  3);
+
+        //checking height after some deletions
+        assertTrue(testTree.delete(9));
+        assertEquals(testTree.getHeight(),  3);
+        assertTrue(testTree.delete(85));
+        assertEquals(testTree.getHeight(),  3);
+        assertTrue(testTree.delete(45));
+        assertEquals(testTree.getHeight(),  2);
+        assertTrue(testTree.delete(47));
+        assertEquals(testTree.getHeight(),  2);
+        assertTrue(testTree.delete(90));
+        assertEquals(testTree.getHeight(),  2);
+        assertTrue(testTree.delete(100));
+        assertEquals(testTree.getHeight(),  1);
+        assertTrue(testTree.delete(12));
+        assertEquals(testTree.getHeight(),  1);
+        assertTrue(testTree.delete(84));
+        assertEquals(testTree.getHeight(),  0);
+        assertTrue(testTree.delete(10));
+        assertEquals(testTree.getHeight(),  -1);
     }
 
     @Test
@@ -286,46 +279,116 @@ class RBTest extends BST {
         assertTrue(testTree.insert(70));
         assertTrue(testTree.insert(11));
         assertEquals(testTree.getSize(), 24);  //check size
+
         //arraylist to store colors of nodes in preorder where 1 means black node and 0 means red node
         ArrayList<Integer> colors = testTree.coloredDFS();
         assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+
+        //check coloring after some normal and corner deletions
+        assertTrue(testTree.delete(31));  //actual delete red node
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.delete(33));  //actual delete black node that have black sibling and far red nephew
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.delete(16));  //actual delete black node that have black sibling, far black nephew and near red nephew
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.delete(17));  //actual delete black node that have black sibling and two black nephews
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.delete(12));
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.delete(23));  //actual delete black node that have red sibling
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.delete(47));  //actual delete black node that have black sibling, far red nephew and near black nephew
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0)));
+
+        //check coloring after some normal and corner insertions
+        assertFalse(testTree.insert(10));  //insert already exist key
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0)));
+        assertTrue(testTree.insert(80));
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0)));
+        assertTrue(testTree.insert(81));
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0)));
+        assertTrue(testTree.insert(105));
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0)));
+        assertTrue(testTree.insert(1));
+        colors = testTree.coloredDFS();
+        assertEquals(colors, new ArrayList<>(Arrays.asList(1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0)));
     }
 
     @Test
-    void test8(){
+    void all_focusedTest(){
+        RB<String> testTree = new RB<>();
+        assertTrue(testTree.insert("morning"));
+        assertTrue(testTree.insert("creation"));
+        assertTrue(testTree.insert("sacrifice"));
+        assertTrue(testTree.insert("appear"));
+        assertTrue(testTree.insert("front"));
+        assertTrue(testTree.insert("23.451"));
+        assertTrue(testTree.insert("interrupt"));
+        assertTrue(testTree.insert("pick"));
+        assertTrue(testTree.insert("college"));
+        assertTrue(testTree.insert("fair"));
+        assertTrue(testTree.insert("jealous"));
+        assertTrue(testTree.insert( "4.7"));
+        assertTrue(testTree.insert("16.030405"));
+        assertTrue(testTree.insert("flex"));
+        assertTrue(testTree.insert("bounce"));
+        assertTrue(testTree.insert("shallow"));
+        assertTrue(testTree.insert("21.245399"));
+        assertEquals(testTree.size, 17); //checking for size after large insertion
+
+        assertTrue(testTree.search("bounce"));
+
+        //This is the final inorder ordering of the tree
+        assertEquals(new ArrayList<String>(Arrays.asList("16.030405", "21.245399", "23.451", "4.7", "appear", "bounce", "college", "creation", "fair", "flex", "front", "interrupt", "jealous", "morning", "pick", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
+
+        assertFalse(testTree.search("software")); //searching for an element that doesn't exist
+
+        //Trying to mass insert elements some of which are in the tree already then checking to be correct
+        assertTrue(testTree.insert("forbid"));
+        assertFalse(testTree.insert("college"));
+        assertTrue(testTree.insert("pin"));
+        assertFalse(testTree.insert("fair"));
+        assertTrue(testTree.insert("hemisphere"));
+        assertTrue(testTree.insert("arena"));
+        assertFalse(testTree.insert("front")); //trying to reinsert the root
+        assertFalse(testTree.insert("bounce")); //trying to insert an existing leaf
+        assertEquals(testTree.size, 21); //check that size didn't change after 3 failed insertion
+
+        //mass deletion then check size
+        assertTrue(testTree.delete("shallow"));
+        assertTrue(testTree.delete("creation"));
+        assertTrue(testTree.delete("jealous"));
+        assertTrue(testTree.delete("front"));
+        assertTrue(testTree.delete("4.7"));
+        assertTrue(testTree.delete("pick"));
+        assertFalse(testTree.search("shallow")); //search for element that just got deleted
+        assertEquals(testTree.size, 15); //check the size after large deletion
+
+        //reinserting elements that were just deleted
+        assertTrue(testTree.insert("front"));
+        assertTrue(testTree.insert("jealous"));
+        assertTrue(testTree.insert("shallow"));
+        assertTrue(testTree.search("shallow"));
+        assertEquals(testTree.size, 18); //check the size after insertion
+
+        assertEquals(new ArrayList<String>(Arrays.asList("16.030405", "21.245399", "23.451", "appear", "arena", "bounce", "college", "fair", "flex", "forbid", "front", "hemisphere", "interrupt", "jealous", "morning", "pin", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
+        assertEquals("hemisphere", testTree.getRoot().getData());
+
+        //checking the colour of some nodes to make sure of the correctness of colours
+        assertFalse(testTree.getRoot().getRight().getLeft().getRight().isBlack());
+        assertFalse(testTree.getRoot().getLeft().getRight().isBlack());
+        assertFalse(testTree.getRoot().getLeft().getRight().getLeft().getLeft().isBlack());
     }
 
-    @Test
-    void test9() {
-    }
-
-    @Test
-    void test10() {
-    }
-
-    @Test
-    void test11(){
-
-    }
-
-    @Test
-    void test12(){
-    }
-
-    @Test
-    void test13() {
-    }
-
-    @Test
-    void test14() {
-    }
-
-    @Test
-    void test15(){
-
-    }
-
-    @Test
-    void test16(){
-    }
 }
