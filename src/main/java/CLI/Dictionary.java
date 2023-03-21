@@ -24,7 +24,7 @@ public class Dictionary implements IDictionary {
     public void startProgram() {
         Scanner sc = new Scanner(System.in);
         printIntro();
-        System.out.println("Choose Dictionary tree:\n1. AVL tree\n2. Red Black tree");
+        System.out.println("Choose Dictionary tree:\n1. AVL tree\n2. RB tree");
         System.out.print("> ");
         int option = sc.nextInt();
         initiate(option);
