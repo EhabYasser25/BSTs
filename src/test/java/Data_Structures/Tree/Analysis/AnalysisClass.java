@@ -4,8 +4,9 @@ import Data_Structures.Tree.AVL;
 import Data_Structures.Tree.BST;
 import Data_Structures.Tree.HelpingClasses.TreeCloner;
 import Data_Structures.Tree.RB;
-import Service.FileManager;
+import Service.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,5 +202,11 @@ public class AnalysisClass {
         }
         FileManager.writeToFile(rb_heightTimes, "Red-Black Height time values.txt");
         FileManager.writeToFile(avl_heightTimes, "AVL Height time values.txt");
+    }
+
+    void compare_bash_insert_time() {
+        BST<String> red_black = new RB<String>();
+        BST<String> AVL = new AVL<String>();
+        CLICommands cli = new BatchInsert();
     }
 }
