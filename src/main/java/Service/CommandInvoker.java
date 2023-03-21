@@ -78,23 +78,6 @@ class Delete implements CLICommands {
         return  (endTime - startTime) / 1000;
     }
 }
-
-class BatchInsert implements CLICommands {
-    private final Scanner sc = new Scanner(System.in);
-    @Override
-    public long execute(BST<String> tree) {
-        System.out.print("Enter File path to the file path: ");
-        System.out.print("> ");
-        String path = sc.nextLine();
-        FileManager fileReader = new FileManager();
-        List<String> words = fileReader.readFile(path);
-        new Point();
-        long startTime = System.nanoTime();
-        Point feedback = batchInsert(tree, words);
-        long endTime = System.nanoTime();
-        System.out.println("Number of words inserted: " + feedback.y + "\nNumber of words found: " + feedback.x);
-        return (endTime - startTime) / 1000;
-    }
     public Point batchInsert(BST<String> tree, List<String> items) {
         int found = 0, notFound = 0;
         for (String item : items) {
@@ -105,30 +88,6 @@ class BatchInsert implements CLICommands {
     }
 }
 
-class BatchDelete implements CLICommands {
-    private final Scanner sc = new Scanner(System.in);
-    @Override
-    public long execute(BST<String> tree) {
-        System.out.print("Enter File path to the file path: ");
-        System.out.print("> ");
-        String path = sc.nextLine();
-        FileManager fileReader = new FileManager();
-        List<String> words = fileReader.readFile(path);
-        long startTime = System.nanoTime();
-        Point feedback = batchDelete(tree, words);
-        long endTime = System.nanoTime();
-        System.out.println("Number of words deleted: " + feedback.x + "\nNumber of words not found: " + feedback.y);
-        return (endTime - startTime) / 1000;
-    }
-    public Point batchDelete(BST<String> tree, List<String> items) {
-        int found = 0, notFound = 0;
-        for (String item : items) {
-            if (tree.delete(item)) found++;
-            else notFound++;
-        }
-        return new Point(found, notFound);
-    }
-}
 
 class Size implements CLICommands {
     @Override
