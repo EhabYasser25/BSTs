@@ -58,11 +58,11 @@ public class Dictionary implements IDictionary {
             option = sc.nextInt();
             if(setCommand(option) == -1) continue;
             command = invoker.invoke(eCommand);
-
+            long time = 0;
             switch (treeType) {
-                case BST -> command.execute(bst);
-                case AVL -> command.execute(avl);
-                case RB -> command.execute(rb);
+                case BST -> time = command.execute(bst);
+                case AVL -> time = command.execute(avl);
+                case RB -> time = command.execute(rb);
                 default -> System.out.println("Tree type not supported!");
             }
             switch (treeType) {
@@ -70,6 +70,7 @@ public class Dictionary implements IDictionary {
                 case AVL -> avl.visit(VisitType.DFS);
                 case RB -> rb.visit(VisitType.DFS);
             }
+            System.out.println("Time in microseconds: " + time);
         }
     }
 

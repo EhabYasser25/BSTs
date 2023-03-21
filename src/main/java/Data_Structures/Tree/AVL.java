@@ -13,6 +13,7 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         this.root.setParent(null);
         this.root.setLeft(null);
         this.root.setRight(null);
+        this.size++;
     }
     public AVL(AVLNode<T> root) {
         this.root = root;
@@ -47,7 +48,7 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
 
     // The method the client deals with, returns false if value doesn't exist and true if it was successfully removed
     public boolean delete(T key){
-        AVLNode<T> target = (AVLNode<T>) super.search(this.root,key);
+        AVLNode<T> target = (AVLNode<T>) super.search(this.root, key);
         if (target == null){ // If the key doesn't exist
             return false;
         }
