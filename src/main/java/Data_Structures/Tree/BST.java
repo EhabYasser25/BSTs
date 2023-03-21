@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import java.util.ArrayList;
 
-public class BST<T extends Comparable<T>> {
+public class BST<T extends Comparable<T>> implements Cloneable{
     /**
      * Each tree has its own root, so it is removed from the parent class
      * We can just add it for normal node, but it's preferred to make each tree has its own root!
@@ -13,6 +13,10 @@ public class BST<T extends Comparable<T>> {
 
     protected int size = 0;
     protected Node<T> root;
+
+    public void setRoot(Node<T> root) {
+        this.root = root;
+    }
 
     protected int height;
 
@@ -226,6 +230,8 @@ public class BST<T extends Comparable<T>> {
     public ArrayList<T> visit(VisitType visitType) {
         // TODO choose one traverse to find height of RB tree
         ArrayList<T> valuesList = new ArrayList<>();
+        if(node_isNull(this.root))
+            return valuesList;
         if(visitType == VisitType.DFS)
             dfs(this.root, valuesList);
         else if(visitType == VisitType.BFS)
@@ -246,4 +252,7 @@ public class BST<T extends Comparable<T>> {
         System.out.println("bfs");
     }
 
+    public BST<T> clone() throws CloneNotSupportedException{
+        return (BST<T>) super.clone();
+    }
 }

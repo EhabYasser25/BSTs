@@ -5,7 +5,7 @@ import Data_Structures.Node.RBNode;
 
 import java.util.ArrayList;
 
-public class RB<T extends Comparable<T>>  extends BST<T> {
+public class RB<T extends Comparable<T>>  extends BST<T>{
     /**
      * Each tree has its own root, so it is removed from the parent class
      * We can just add it for normal node, but it's preferred to make each tree has its own root!
@@ -51,6 +51,7 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         if(node_isNull(super.insert(this.root, null, newNode)))
             return false;
         checkAndFix(newNode);
+        this.getRoot().setBlack(true);
         return true;
     }
 
@@ -69,7 +70,8 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
         else
             deletedNode.getParent().setRight(nil);
         size--;
-        this.getRoot().setBlack(true);
+        if(this.root != null)
+            this.getRoot().setBlack(true);
         return true;
     }
 
@@ -177,6 +179,10 @@ public class RB<T extends Comparable<T>>  extends BST<T> {
 //        System.out.print(node.getData() + ": " + color + ",  ");
         recursiveColoredDFS(node.getLeft(), colors);
         recursiveColoredDFS(node.getRight(), colors);
+    }
+
+    public RB<T> clone() throws CloneNotSupportedException{
+        return (RB<T>) super.clone();
     }
 
 }

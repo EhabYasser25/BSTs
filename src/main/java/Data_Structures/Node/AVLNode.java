@@ -44,4 +44,8 @@ public class AVLNode<T extends Comparable<T>> extends Node<T> {
         return (AVLNode<T>) super.getUncle();
     }
 
+    public AVLNode<T> clone() throws CloneNotSupportedException{
+        return (AVLNode<T>) super.clone();
+    }
+
 }

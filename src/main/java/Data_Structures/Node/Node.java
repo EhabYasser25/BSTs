@@ -1,6 +1,6 @@
 package Data_Structures.Node;
 
-public class Node<T extends Comparable<T>>{
+public class Node<T extends Comparable<T>> implements Cloneable{
     private T data;
     private Node<T> parent = null;
     private Node<T> left = null;
@@ -72,6 +72,10 @@ public class Node<T extends Comparable<T>>{
             return 1;
         else
             return -1;
+    }
+    @SuppressWarnings("unchecked")
+    public Node<T> clone() throws CloneNotSupportedException{
+        return (Node<T>) super.clone();
     }
 
 }

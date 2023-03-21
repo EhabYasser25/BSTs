@@ -1,7 +1,9 @@
 package Service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +21,11 @@ public class FileManager {
             e.printStackTrace();
         }
         return words;
+    }
+
+    public static void writeToFile(List<?> list, String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        writer.write(list.toString());
+        writer.close();
     }
 }

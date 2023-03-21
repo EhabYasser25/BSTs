@@ -138,4 +138,8 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         y.setHeight(); y.setBalance();
     }
 
+    public AVL<T> clone() throws CloneNotSupportedException{
+        return (AVL<T>) super.clone();
+    }
+
 }

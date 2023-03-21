@@ -42,4 +42,8 @@ public class RBNode<T extends Comparable<T>> extends Node<T> {
         this.black = tmp;
     }
 
+    public RBNode<T> clone() throws CloneNotSupportedException{
+        return (RBNode<T>) super.clone();
+    }
+
 }
