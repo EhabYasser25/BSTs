@@ -30,7 +30,7 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         return (AVLNode<T>) this.root;
     }
     public int getHeight() {
-        return ((AVLNode<T>) this.root).getHeight();
+        return super.getHeight();
     }
 
     public boolean insert(T data) {
@@ -73,11 +73,17 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         }
         // Set reference to parent being returned
         AVLNode<T> p = target.getParent();
+
         // Base case 1: node being deleted is a leaf node
         if (noLeft && noRight){
-            if (target.isLeftChild()) p.setLeft(null); else p.setRight(null);
-            target.setParent(null);
-            return p;
+            if (p != null){ // target node is not the root
+                if (target.isLeftChild()) p.setLeft(null); else p.setRight(null);
+                target.setParent(null);
+                return p;
+            }else{ // target node is the root
+                this.root = null;
+                return null;
+            }
         }
         // Set reference to node replacing the deleted node in the other base cases
         AVLNode<T> successor;
@@ -86,7 +92,11 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         else // Base case 3: node only has a left child
             successor = target.getLeft();
         // Make parent replace target with successor
-        if (target.isLeftChild()) p.setLeft(successor); else p.setRight(successor);
+        if (p != null) { // Node isn't root
+            if (target.isLeftChild()) p.setLeft(successor); else p.setRight(successor);
+        }else{ // Node being deleted is the root, so the successor will be the new root
+            this.root = successor;
+        }
         successor.setParent(p); // Set successor's parent to be the target's parent
         // Disconnect the target
         target.setParent(null); target.setRight(null);

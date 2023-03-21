@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import java.util.ArrayList;
 
-public class BST<T extends Comparable<T>> implements Cloneable{
+public class BST<T extends Comparable<T>>{
     /**
      * Each tree has its own root, so it is removed from the parent class
      * We can just add it for normal node, but it's preferred to make each tree has its own root!
@@ -250,9 +250,5 @@ public class BST<T extends Comparable<T>> implements Cloneable{
     
     private void bfs(Node<T> node) {
         System.out.println("bfs");
-    }
-
-    public BST<T> clone() throws CloneNotSupportedException{
-        return (BST<T>) super.clone();
     }
 }

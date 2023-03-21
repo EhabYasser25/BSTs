@@ -142,12 +142,20 @@ class RBTest extends BST {
         assertTrue(testTree.insert("college"));
         assertTrue(testTree.insert("fair"));
         assertTrue(testTree.insert("jealous"));
+
+        assertEquals(testTree.getHeight(), 3);
+
         assertTrue(testTree.insert( "4.7"));
         assertTrue(testTree.insert("16.030405"));
         assertTrue(testTree.insert("flex"));
+
+        assertEquals(testTree.getHeight(), 4);
+
         assertTrue(testTree.insert("bounce"));
         assertTrue(testTree.insert("shallow"));
         assertTrue(testTree.insert("21.245399"));
+
+        assertEquals(testTree.getHeight(), 4);
         assertEquals(testTree.size, 17); //checking for size after large insertion
 
         assertTrue(testTree.search("bounce"));
