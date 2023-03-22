@@ -108,7 +108,7 @@ public class ComparisonTests {
         CommandInvoker commands = new CommandInvoker();
         BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
         FileManager reader = new FileManager();
-        List<String> words = reader.readFile("D:\\CP\\tests\\1000.txt");
+        List<String> words = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\DS 2\\BSTs\\wordlist.txt");
         long startTime = System.nanoTime();
         insert.batchInsert(avlInsert, words);
         long endTime = System.nanoTime();
@@ -119,6 +119,7 @@ public class ComparisonTests {
         long timeRB = endTime - startTime;
 
         assertTrue(timeAvl > timeRB); // time comparison batch insert
+
         assertTrue(avlInsert.getHeight() <= rbInsert.getHeight()); // height
 
         BatchDelete delete = (BatchDelete) commands.invoke(Commands.BATCHDELETE);

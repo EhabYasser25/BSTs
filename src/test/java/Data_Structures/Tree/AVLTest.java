@@ -214,11 +214,11 @@ class AVLTest extends BST {
         FileManager reader = new FileManager();
 
         List<String>    A = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\30A.txt"),
-                B = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\30B.txt"),
-                ABCD = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\100A.txt"),
-                fiveWords = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\5.txt"),
-                notFound = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\10.txt"),
-                empty = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\empty.txt");
+                        B = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\30B.txt"),
+                        ABCD = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\100A.txt"),
+                        fiveWords = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\5.txt"),
+                        notFound = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\10.txt"),
+                        empty = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\empty.txt");
 
         // insert the whole 90 words sample
         insert.batchInsert(avl, ABCD);
@@ -318,11 +318,11 @@ class AVLTest extends BST {
         BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
         FileManager reader = new FileManager();
 
-        List<String>    A = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\30A.txt"),
-                B = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\30B.txt"),
-                C = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\30C.txt"),
-                ABCD = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\100A.txt"),
-                empty = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\empty.txt");
+        List<String>    A = reader.readFile("target/batch_cases/30A.txt"),
+                        B = reader.readFile("target/batch_cases/30B.txt"),
+                        C = reader.readFile("target/batch_cases/30C.txt"),
+                        ABCD = reader.readFile("target/batch_cases/100A.txt"),
+                        empty = reader.readFile("target/batch_cases/empty.txt");
 
         // insert all words to an empty tree
         Point AP = insert.batchInsert(avlInsert, A);
