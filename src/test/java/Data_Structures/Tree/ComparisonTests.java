@@ -1,12 +1,7 @@
 package Data_Structures.Tree;
-import Data_Structures.Tree.HelpingClasses.TreeCloner;
-import Service.BatchDelete;
-import Service.BatchInsert;
-import Service.FileManager;
+import Service.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,100 +24,148 @@ public class ComparisonTests {
         assertEquals(3, rb_tree.getHeight());
         assertEquals(2, avl_tree.getHeight());
     }
+
     @Test
-    void compare_bash_insert_time() throws CloneNotSupportedException, IOException {
-        BST<String> red_black = new RB<String>();
-        BST<String> avl = new AVL<String>();
+    void compare_height2() {
+        AVL<Integer> testAVL = new AVL<>();
+        RB<Integer> testRB = new RB<>();
 
-        TreeCloner<String> rb_cloner = new TreeCloner<String>(red_black);
-        TreeCloner<String> avl_cloner = new TreeCloner<String>(avl);
-
-        BatchInsert insert = new BatchInsert();
-        FileManager reader = new FileManager();
-        List<String> initial_words_in_tree = reader.readFile("D:\\CP\\tests\\600words.txt");
-        //each tree will be initialized by 600 words
-        insert.batchInsert(avl,initial_words_in_tree);
-        insert.batchInsert(red_black,initial_words_in_tree);
-
-        BST<String> avl_clone = null;
-        BST<String> rb_clone = null;
-
-        // to calculate time
-        long start_avl_batchInsertTime , end_avl_batchInsertTime, finish_avl_batchInsertTime;
-        long start_rb_batchInsertTime , end_rb_batchInsertTime, finish_rb_batchInsertTime;
-        List<Long> avl_batchInsertTimes = new ArrayList<>();
-        List<Long> rb_batchInsertTimes = new ArrayList<>();
-
-        // Here, we will test the batch insert on the two types of trees by adding
-        // word or 2 words or ... to the tree which have 1000 words and the base tree isn't affected by the insertion
-        for(int i = 1 ; i <= 60 ; i++){
-            List<String> added_words = reader.readFile("D:\\CP\\tests\\"+Integer.toString(i)+"words.txt");
-            avl_clone = avl_cloner.getClone();
-            rb_clone = rb_cloner.getClone();
-
-            start_avl_batchInsertTime =  System.nanoTime();
-            insert.batchInsert(avl_clone,added_words);
-            end_avl_batchInsertTime =  System.nanoTime();
-            finish_avl_batchInsertTime = end_avl_batchInsertTime - start_avl_batchInsertTime;
-
-            start_rb_batchInsertTime =  System.nanoTime();
-            insert.batchInsert(rb_clone,added_words);
-            end_rb_batchInsertTime =  System.nanoTime();
-            finish_rb_batchInsertTime = end_rb_batchInsertTime - start_rb_batchInsertTime;
-
-            avl_batchInsertTimes.add(finish_avl_batchInsertTime);
-            rb_batchInsertTimes.add(finish_rb_batchInsertTime);
-        }
-        FileManager.writeToFile(avl_batchInsertTimes,"AVL Batch Insert Time Values.txt");
-        FileManager.writeToFile(rb_batchInsertTimes,"RB Batch Insert Time Values.txt");
+        //inserting linear list of integers and compare between height handling between two trees
+        assertTrue(testAVL.insert(1));
+        assertTrue(testRB.insert(1));
+        assertEquals(testAVL.getHeight(), 0);
+        assertEquals(testRB.getHeight(), 0);
+        assertTrue(testAVL.insert(2));
+        assertTrue(testRB.insert(2));
+        assertEquals(testAVL.getHeight(), 1);
+        assertEquals(testRB.getHeight(), 1);
+        assertTrue(testAVL.insert(3));
+        assertTrue(testRB.insert(3));
+        assertEquals(testAVL.getHeight(), 1);
+        assertEquals(testRB.getHeight(), 1);
+        assertTrue(testAVL.insert(4));
+        assertTrue(testRB.insert(4));
+        assertEquals(testAVL.getHeight(), 2);
+        assertEquals(testRB.getHeight(), 2);
+        assertTrue(testAVL.insert(5));
+        assertTrue(testRB.insert(5));
+        assertEquals(testAVL.getHeight(), 2);
+        assertEquals(testRB.getHeight(), 2);
+        assertTrue(testAVL.insert(6));
+        assertTrue(testRB.insert(6));  //the RB tree height increased at this step while avl still have same height
+        assertEquals(testAVL.getHeight(), 2);
+        assertEquals(testRB.getHeight(), 3);
+        assertTrue(testAVL.insert(7));
+        assertTrue(testRB.insert(7));
+        assertEquals(testAVL.getHeight(), 2);
+        assertEquals(testRB.getHeight(), 3);
+        assertTrue(testAVL.insert(8));
+        assertTrue(testRB.insert(8));
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 3);
+        assertTrue(testAVL.insert(9));
+        assertTrue(testRB.insert(9));
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 3);
+        assertTrue(testAVL.insert(10));
+        assertTrue(testRB.insert(10));  //again only the height of RB increased
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 4);
+        assertTrue(testAVL.insert(11));
+        assertTrue(testRB.insert(11));
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 4);
+        assertTrue(testAVL.insert(12));
+        assertTrue(testRB.insert(12));
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 4);
+        assertTrue(testAVL.insert(13));
+        assertTrue(testRB.insert(13));
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 4);
+        assertTrue(testAVL.insert(14));
+        assertTrue(testRB.insert(14));  //the difference between their heights becomes 2 at this step
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 5);
+        assertTrue(testAVL.insert(15));
+        assertTrue(testRB.insert(15));
+        assertEquals(testAVL.getHeight(), 3);
+        assertEquals(testRB.getHeight(), 5);
+        assertTrue(testAVL.insert(16));
+        assertTrue(testRB.insert(16));
+        assertEquals(testAVL.getHeight(), 4);
+        assertEquals(testRB.getHeight(), 5);
+        assertTrue(testAVL.insert(17));
+        assertTrue(testRB.insert(17));
+        assertEquals(testAVL.getHeight(), 4);
+        assertEquals(testRB.getHeight(), 5);
     }
 
     @Test
-    void compare_bash_delete_time() throws CloneNotSupportedException, IOException {
-        BST<String> red_black = new RB<String>();
-        BST<String> avl = new AVL<String>();
-
-        TreeCloner<String> rb_cloner = new TreeCloner<String>(red_black);
-        TreeCloner<String> avl_cloner = new TreeCloner<String>(avl);
-
-        BatchInsert insert = new BatchInsert();
-        BatchDelete delete = new BatchDelete();
+    void insertDeleteTimeHeightComparison(){
+        AVL<String> avlInsert = new AVL<>();
+        RB<String> rbInsert = new RB<>();
+        CommandInvoker commands = new CommandInvoker();
+        BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
         FileManager reader = new FileManager();
-        List<String> initial_words_in_tree = reader.readFile("D:\\CP\\tests\\660words.txt");
-        //each tree will be initialized by 660 words
-        insert.batchInsert(avl,initial_words_in_tree);
-        insert.batchInsert(red_black,initial_words_in_tree);
+        List<String> words = reader.readFile("D:\\CP\\tests\\1000.txt");
+        long startTime = System.nanoTime();
+        insert.batchInsert(avlInsert, words);
+        long endTime = System.nanoTime();
+        long timeAvl = endTime - startTime;
+        startTime = System.nanoTime();
+        insert.batchInsert(rbInsert, words);
+        endTime = System.nanoTime();
+        long timeRB = endTime - startTime;
 
-        BST<String> rb_clone = null;
-        BST<String> avl_clone = null;
+        assertTrue(timeAvl > timeRB); // time comparison batch insert
+        assertTrue(avlInsert.getHeight() <= rbInsert.getHeight()); // height
 
-        // to calculate time
-        long start_avl_batchDeleteTime , end_avl_batchDeleteTime, finish_avl_batchDeleteTime;
-        long start_rb_batchDeleteTime , end_rb_batchDeleteTime, finish_rb_batchDeleteTime;
-        List<Long> avl_batchDeleteTimes = new ArrayList<>();
-        List<Long> rb_batchDeleteTimes = new ArrayList<>();
+        BatchDelete delete = (BatchDelete) commands.invoke(Commands.BATCHDELETE);
+        words = reader.readFile("D:\\CP\\tests\\26_1000.txt");
 
-        // Here, we will test the batch insert on the two types of trees by deleting
-        // word or 2 words or ... to the tree which have 1000 words and the base tree isn't affected by the insertion
-        for(int i = 1 ; i <= 60 ; i++){
-            List<String> deleted_words = reader.readFile("D:\\CP\\tests\\"+Integer.toString(i)+"words.txt");
-            avl_clone = avl_cloner.getClone();
-            rb_clone = rb_cloner.getClone();
+        startTime = System.nanoTime();
+        delete.batchDelete(avlInsert, words);
+        endTime = System.nanoTime();
+        timeAvl = endTime - startTime;
 
-            start_avl_batchDeleteTime =  System.nanoTime();
-            delete.batchDelete(avl_clone,deleted_words);
-            end_avl_batchDeleteTime =  System.nanoTime();
-            finish_avl_batchDeleteTime = end_avl_batchDeleteTime - start_avl_batchDeleteTime;
+        startTime = System.nanoTime();
+        delete.batchDelete(rbInsert, words);
+        endTime = System.nanoTime();
+        timeRB = endTime - startTime;
 
-            start_rb_batchDeleteTime =  System.nanoTime();
-            delete.batchDelete(rb_clone,deleted_words);
-            end_rb_batchDeleteTime =  System.nanoTime();
-            finish_rb_batchDeleteTime = end_rb_batchDeleteTime - start_rb_batchDeleteTime;
-
-            avl_batchDeleteTimes.add(finish_avl_batchDeleteTime);
-            rb_batchDeleteTimes.add(finish_rb_batchDeleteTime);
-        }
-        FileManager.writeToFile(avl_batchDeleteTimes,"AVL Batch Delete Time Values.txt");
-        FileManager.writeToFile(rb_batchDeleteTimes,"RB Batch Delete Time Values.txt");
+        assertTrue(timeAvl > timeRB); // time comparison batch delete
+        assertTrue(avlInsert.getHeight() <= rbInsert.getHeight()); // height comparison batch delete
     }
+
+    @Test
+    void searchComparison() {
+        AVL<String> avl = new AVL<>();
+        RB<String> rb = new RB<>();
+        CommandInvoker commands = new CommandInvoker();
+        BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
+        FileManager reader = new FileManager();
+
+        List<String> searchTestWords = reader.readFile("D:\\CSE FOLDERS AND FILES\\semester 4\\BSTs\\100A.txt");
+
+
+        // insert the whole 90 words sample
+        insert.batchInsert(avl, searchTestWords);
+        insert.batchInsert(rb, searchTestWords);
+
+        long startTime = System.nanoTime();
+        avl.search("hello");
+        long endTime = System.nanoTime();
+
+        long avlTime = endTime - startTime;
+
+        startTime = System.nanoTime();
+        rb.search("hello");
+        endTime = System.nanoTime();
+
+        long RBTime = endTime - startTime;
+
+        assertTrue(avlTime > RBTime);
+    }
+
 }
