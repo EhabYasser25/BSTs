@@ -26,6 +26,7 @@ public class FileManager {
     public static void writeToFile(List<?> list, String filename) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
         writer.write(list.toString());
+        System.out.println("Word list written to file.");
         writer.close();
     }
 }

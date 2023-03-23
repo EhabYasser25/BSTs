@@ -296,4 +296,48 @@ public class AnalysisClass {
         FileManager.writeToFile(avl_batchInsertTimes,"AVL Batch Delete Time Values.txt");
         FileManager.writeToFile(rb_batchInsertTimes,"RB Batch Delete Time Values.txt");
     }
+
+    public void batch_large_sample(int max, int maxFile) throws CloneNotSupportedException, IOException {
+        FileManager reader = new FileManager();
+        List<String> base;
+        base = reader.readFile("target/batch/base.txt");
+        AVL<String> avl = new AVL<>();
+        RB<String> rb = new RB<>();
+        CommandInvoker commands = new CommandInvoker();
+        BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
+        insert.batchInsert(avl, base); // insert 1M words base
+        insert.batchInsert(rb, base); // insert 1M words base
+        TreeCloner<String> clonerAvl = new TreeCloner<>(avl);
+        TreeCloner<String> clonerRB = new TreeCloner<>(rb);
+        List<Long> timeAVL = new ArrayList<>();
+        List<Long> timeRB = new ArrayList<>();
+
+        for(int i = 0; i <max / maxFile; i++) {
+            AVL<String> avlTest = (AVL<String>) clonerAvl.getClone();
+            RB<String> rbTest = (RB<String>) clonerRB.getClone();
+
+            String path = "target/batch/" + Integer.toString(i + 1) + ".txt";
+            List<String> list = reader.readFile(path);
+
+            long time;
+
+            long startTime = System.nanoTime();
+            insert.batchInsert(avlTest, list);
+            long endTime = System.nanoTime();
+            time = 1000 * (endTime - startTime) / ((long) (i + 1) * maxFile);
+            timeAVL.add(time);
+
+            startTime = System.nanoTime();
+            insert.batchInsert(rbTest, list);
+            endTime = System.nanoTime();
+            time = 1000 * (endTime - startTime) / ((long) (i + 1) * maxFile);
+            timeRB.add(time);
+        }
+
+        String timePathAVL = "target/batch/time_batch_AVL.txt";
+        String timePathRB = "target/batch/time_batch_RB.txt";
+        FileManager.writeToFile(timeAVL, timePathAVL);
+        FileManager.writeToFile(timeRB, timePathRB);
+
+    }
 }

@@ -1,7 +1,9 @@
 package Data_Structures.Tree;
+import Data_Structures.Tree.Analysis.AnalysisClass;
 import Service.*;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -167,6 +169,19 @@ public class ComparisonTests {
         long RBTime = endTime - startTime;
 
         assertTrue(avlTime > RBTime);
+    }
+
+    // Only for analysis
+    @Test
+    void batch() {
+        AnalysisClass analysisClass = new AnalysisClass();
+        try {
+            analysisClass.batch_large_sample(100000, 500);
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone not supported!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
