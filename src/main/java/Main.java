@@ -13,8 +13,8 @@ import static Service.FileManager.writeToFile;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-//        IDictionary dictionary = new Dictionary();
-//        dictionary.startProgram();
+        IDictionary dictionary = new Dictionary();
+        dictionary.startProgram();
 
         // 100000 words base
         ArrayList<String> base = randomString(100000, 26);
