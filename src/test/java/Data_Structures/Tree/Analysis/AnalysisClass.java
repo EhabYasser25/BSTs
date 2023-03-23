@@ -203,7 +203,7 @@ public class AnalysisClass {
         FileManager.writeToFile(avl_heightTimes, "AVL Height time values.txt");
     }
 
-    void compare_bash_insert_time() throws CloneNotSupportedException, IOException {
+    public void compare_bash_insert_time(int points, int maxFile) throws CloneNotSupportedException, IOException {
         BST<String> red_black = new RB<String>();
         BST<String> avl = new AVL<String>();
 
@@ -212,13 +212,13 @@ public class AnalysisClass {
 
         BatchInsert insert = new BatchInsert();
         FileManager reader = new FileManager();
-        List<String> initial_words_in_tree = reader.readFile("D:\\CP\\tests\\600word.txt");
+        List<String> initial_words_in_tree = reader.readFile("target/batch/base.txt");
         //each tree will be initialized by 600 words
-        insert.batchInsert(avl,initial_words_in_tree);
-        insert.batchInsert(red_black,initial_words_in_tree);
+        insert.batchInsert(avl, initial_words_in_tree);
+        insert.batchInsert(red_black, initial_words_in_tree);
 
-        BST<String> avl_clone = null;
-        BST<String> rb_clone = null;
+        BST<String> avl_clone;
+        BST<String> rb_clone;
 
         // to calculate time
         long start_avl_batchInsertTime , end_avl_batchInsertTime, finish_avl_batchInsertTime;
@@ -228,28 +228,36 @@ public class AnalysisClass {
 
         // Here, we will test the batch insert on the two types of trees by adding
         // word or 2 words or ... to the tree which have 1000 words and the base tree isn't affected by the insertion
-        for(int i = 1 ; i <= 60 ; i++){
-            List<String> added_words = reader.readFile("D:\\CP\\tests\\"+Integer.toString(i)+"word.txt");
+        for(int i = 1 ; i <= points ; i++){
+            List<String> added_words = reader.readFile("target/batch/" + Integer.toString(i) + ".txt");
             avl_clone = avl_cloner.getClone();
             rb_clone = rb_cloner.getClone();
 
             start_avl_batchInsertTime =  System.nanoTime();
             insert.batchInsert(avl_clone,added_words);
             end_avl_batchInsertTime =  System.nanoTime();
-            finish_avl_batchInsertTime = end_avl_batchInsertTime - start_avl_batchInsertTime;
+            finish_avl_batchInsertTime = 1000 * (end_avl_batchInsertTime - start_avl_batchInsertTime) / ((long) i * maxFile);
 
             start_rb_batchInsertTime =  System.nanoTime();
             insert.batchInsert(rb_clone,added_words);
             end_rb_batchInsertTime =  System.nanoTime();
-            finish_rb_batchInsertTime = end_rb_batchInsertTime - start_rb_batchInsertTime;
+            finish_rb_batchInsertTime = 1000 * (end_rb_batchInsertTime - start_rb_batchInsertTime) / ((long) i * maxFile);
 
             avl_batchInsertTimes.add(finish_avl_batchInsertTime);
             rb_batchInsertTimes.add(finish_rb_batchInsertTime);
         }
-        FileManager.writeToFile(avl_batchInsertTimes,"AVL Batch Insert Time Values.txt");
-        FileManager.writeToFile(rb_batchInsertTimes,"RB Batch Insert Time Values.txt");
+        String timePathAVL = "target/batch/AVL Batch Insert Time Values.txt";
+        String timePathRB = "target/batch/RB Batch Insert Time Values.txt";
+//        String heightPathAVL = "target/batch/AVL_Height.txt";
+//        String heightPathRB = "target/batch/RB_Height.txt";
+//        String balanceAVLPath = "target/batch/AVL_Balance.txt";
+        FileManager.writeToFile(avl_batchInsertTimes, timePathAVL);
+        FileManager.writeToFile(rb_batchInsertTimes, timePathRB);
+//        FileManager.writeToFile(heightAVL, heightPathAVL);
+//        FileManager.writeToFile(heightRB, heightPathRB);
+//        FileManager.writeToFile(balanceAVL, balanceAVLPath);
     }
-    void compare_bash_delete_time() throws CloneNotSupportedException, IOException {
+    public void compare_bash_delete_time(int points, int maxFile) throws CloneNotSupportedException, IOException {
         BST<String> red_black = new RB<String>();
         BST<String> avl = new AVL<String>();
 
@@ -259,13 +267,13 @@ public class AnalysisClass {
         BatchInsert insert = new BatchInsert();
         BatchDelete delete = new BatchDelete();
         FileManager reader = new FileManager();
-        List<String> initial_words_in_tree = reader.readFile("D:\\CP\\tests\\660word.txt");
+        List<String> initial_words_in_tree = reader.readFile("target/batch/base.txt");
         //each tree will be initialized by 660 words
         insert.batchInsert(avl,initial_words_in_tree);
         insert.batchInsert(red_black,initial_words_in_tree);
 
-        BST<String> rb_clone = null;
-        BST<String> avl_clone = null;
+        BST<String> rb_clone;
+        BST<String> avl_clone;
 
         // to calculate time
         long start_avl_batchDeleteTime , end_avl_batchDeleteTime, finish_avl_batchDeleteTime;
@@ -275,69 +283,28 @@ public class AnalysisClass {
 
         // Here, we will test the batch insert on the two types of trees by deleting
         // word or 2 words or ... to the tree which have 1000 words and the base tree isn't affected by the insertion
-        for(int i = 1 ; i <= 60 ; i++){
-            List<String> added_words = reader.readFile("D:\\CP\\tests\\"+Integer.toString(i)+"word.txt");
+        for(int i = 1 ; i <= points ; i++){
+            List<String> added_words = reader.readFile("target/batch/" + Integer.toString(i) + ".txt");
             avl_clone = avl_cloner.getClone();
             rb_clone = rb_cloner.getClone();
 
             start_avl_batchDeleteTime =  System.nanoTime();
-            delete.batchDelete(avl_clone,added_words);
+            delete.batchDelete(avl_clone, added_words);
             end_avl_batchDeleteTime =  System.nanoTime();
-            finish_avl_batchDeleteTime = end_avl_batchDeleteTime - start_avl_batchDeleteTime;
+            finish_avl_batchDeleteTime = 1000 * (end_avl_batchDeleteTime - start_avl_batchDeleteTime) /  ((long) i * maxFile) ;
 
             start_rb_batchDeleteTime =  System.nanoTime();
-            insert.batchInsert(rb_clone,added_words);
+            insert.batchInsert(rb_clone, added_words);
             end_rb_batchDeleteTime =  System.nanoTime();
-            finish_rb_batchDeleteTime = end_rb_batchDeleteTime - start_rb_batchDeleteTime;
+            finish_rb_batchDeleteTime = 1000 * (end_rb_batchDeleteTime - start_rb_batchDeleteTime) / ((long) i * maxFile);
 
             avl_batchInsertTimes.add(finish_avl_batchDeleteTime);
             rb_batchInsertTimes.add(finish_rb_batchDeleteTime);
         }
-        FileManager.writeToFile(avl_batchInsertTimes,"AVL Batch Delete Time Values.txt");
-        FileManager.writeToFile(rb_batchInsertTimes,"RB Batch Delete Time Values.txt");
+        String timePathAVL = "target/batch/AVL Batch Delete Time Values.txt";
+        String timePathRB = "target/batch/RB Batch Delete Time Values.txt";
+        FileManager.writeToFile(avl_batchInsertTimes, timePathAVL);
+        FileManager.writeToFile(rb_batchInsertTimes, timePathRB);
     }
 
-    public void batch_large_sample(int max, int maxFile) throws CloneNotSupportedException, IOException {
-        FileManager reader = new FileManager();
-        List<String> base;
-        base = reader.readFile("target/batch/base.txt");
-        AVL<String> avl = new AVL<>();
-        RB<String> rb = new RB<>();
-        CommandInvoker commands = new CommandInvoker();
-        BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
-        insert.batchInsert(avl, base); // insert 1M words base
-        insert.batchInsert(rb, base); // insert 1M words base
-        TreeCloner<String> clonerAvl = new TreeCloner<>(avl);
-        TreeCloner<String> clonerRB = new TreeCloner<>(rb);
-        List<Long> timeAVL = new ArrayList<>();
-        List<Long> timeRB = new ArrayList<>();
-
-        for(int i = 0; i <max / maxFile; i++) {
-            AVL<String> avlTest = (AVL<String>) clonerAvl.getClone();
-            RB<String> rbTest = (RB<String>) clonerRB.getClone();
-
-            String path = "target/batch/" + Integer.toString(i + 1) + ".txt";
-            List<String> list = reader.readFile(path);
-
-            long time;
-
-            long startTime = System.nanoTime();
-            insert.batchInsert(avlTest, list);
-            long endTime = System.nanoTime();
-            time = 1000 * (endTime - startTime) / ((long) (i + 1) * maxFile);
-            timeAVL.add(time);
-
-            startTime = System.nanoTime();
-            insert.batchInsert(rbTest, list);
-            endTime = System.nanoTime();
-            time = 1000 * (endTime - startTime) / ((long) (i + 1) * maxFile);
-            timeRB.add(time);
-        }
-
-        String timePathAVL = "target/batch/time_batch_AVL.txt";
-        String timePathRB = "target/batch/time_batch_RB.txt";
-        FileManager.writeToFile(timeAVL, timePathAVL);
-        FileManager.writeToFile(timeRB, timePathRB);
-
-    }
 }

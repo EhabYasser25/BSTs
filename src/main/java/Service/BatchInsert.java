@@ -29,6 +29,7 @@ public class BatchInsert implements CLICommands {
         for (String item : items) {
             if (tree.insert(item)) notFound++;
             else found++;
+            System.out.println(tree.getHeight());
         }
         return new Point(found, notFound);
     }

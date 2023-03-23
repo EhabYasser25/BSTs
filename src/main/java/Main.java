@@ -16,19 +16,20 @@ public class Main {
 //        IDictionary dictionary = new Dictionary();
 //        dictionary.startProgram();
 
-        ArrayList<String> base = randomString(100000);
+        // 100000 words base
+        ArrayList<String> base = randomString(100000, 26);
         writeToFile(base, "target/batch/base.txt");
 
+        // 200 points, difference in number of words in each two consecutive files = 500
         for(int i = 0; i < 200; i++) {
-            ArrayList<String> file = randomString( 500 * (i + 1));
+            ArrayList<String> file = randomString( 500 * (i + 1), 26);
             writeToFile(file, "target/batch/" + Integer.toString(i + 1) + ".txt");
         }
 
     }
 
-    public static ArrayList<String> randomString(int max) {
+    public static ArrayList<String> randomString(int max, int length) {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        int length = 50;
         Random random = new Random();
 
         ArrayList<String> base = new ArrayList<>();

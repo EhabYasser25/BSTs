@@ -176,7 +176,15 @@ public class ComparisonTests {
     void batch() {
         AnalysisClass analysisClass = new AnalysisClass();
         try {
-            analysisClass.batch_large_sample(100000, 500);
+            analysisClass.compare_bash_insert_time(200, 500);
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone not supported!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            analysisClass.compare_bash_delete_time(200, 500);
         } catch (CloneNotSupportedException e) {
             System.out.println("Clone not supported!");
         } catch (IOException e) {
