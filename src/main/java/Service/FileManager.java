@@ -1,7 +1,6 @@
 package Service;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,10 +22,43 @@ public class FileManager {
         return words;
     }
 
-    public static void writeToFile(List<?> list, String filename) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-        writer.write(list.toString());
-        System.out.println("Word list written to file.");
-        writer.close();
+    public static void writeStringToFile(List<String> base, String filename) throws IOException {
+        try {
+            FileWriter writer = new FileWriter(filename);
+            for (String word : base) {
+                writer.write(word + "\n"); // write word followed by newline character
+            }
+            writer.close();
+            System.out.println("Word list written to file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the file.");
+            e.printStackTrace();
+        }
+    }
+    public static void writeLongToFile(List<Long> base, String filename) throws IOException {
+        try {
+            FileWriter writer = new FileWriter(filename);
+            for (long word : base) {
+                writer.write(word + "\n"); // write word followed by newline character
+            }
+            writer.close();
+            System.out.println("Word list written to file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the file.");
+            e.printStackTrace();
+        }
+    }
+    public static void writeIntToFile(List<Integer> base, String filename) throws IOException {
+        try {
+            FileWriter writer = new FileWriter(filename);
+            for (int word : base) {
+                writer.write(word + "\n"); // write word followed by newline character
+            }
+            writer.close();
+            System.out.println("Word list written to file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the file.");
+            e.printStackTrace();
+        }
     }
 }

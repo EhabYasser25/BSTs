@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import static Service.FileManager.writeToFile;
+import static Service.FileManager.writeStringToFile;
 
 public class AnalysisClass {
 
@@ -73,8 +73,8 @@ public class AnalysisClass {
             AVL.insert(inputValues[j]);
         }
 
-        FileManager.writeToFile(rb_insertionTimes, "target/other_analysis_data/Red-Black insertion time values.txt");
-        FileManager.writeToFile(avl_insertionTimes, "target/other_analysis_data/AVL insertion time values.txt");
+        FileManager.writeLongToFile(rb_insertionTimes, "target/other_analysis_data/Red-Black insertion time values.txt");
+        FileManager.writeLongToFile(avl_insertionTimes, "target/other_analysis_data/AVL insertion time values.txt");
     }
 
     @Test
@@ -120,8 +120,8 @@ public class AnalysisClass {
             AVL.delete(inputValues[j]);
         }
 
-        FileManager.writeToFile(rb_deletionTimes, "target/other_analysis_data/Red-Black deletion time values.txt");
-        FileManager.writeToFile(avl_deletionTimes, "target/other_analysis_data/AVL deletion time values.txt");
+        FileManager.writeLongToFile(rb_deletionTimes, "target/other_analysis_data/Red-Black deletion time values.txt");
+        FileManager.writeLongToFile(avl_deletionTimes, "target/other_analysis_data/AVL deletion time values.txt");
     }
 
     @Test
@@ -155,8 +155,8 @@ public class AnalysisClass {
             red_black.insert(inputValues[j]);
             AVL.insert(inputValues[j]);
         }
-        FileManager.writeToFile(rb_searchTimes, "target/other_analysis_data/Red-Black search time values.txt");
-        FileManager.writeToFile(avl_searchTimes, "target/other_analysis_data/AVL search time values.txt");
+        FileManager.writeLongToFile(rb_searchTimes, "target/other_analysis_data/Red-Black search time values.txt");
+        FileManager.writeLongToFile(avl_searchTimes, "target/other_analysis_data/AVL search time values.txt");
     }
 
     @Test
@@ -188,8 +188,8 @@ public class AnalysisClass {
             red_black.insert(inputValue);
             AVL.insert(inputValue);
         }
-        FileManager.writeToFile(rb_sizeTimes, "target/other_analysis_data/Red-Black size time values.txt");
-        FileManager.writeToFile(avl_sizeTimes, "target/other_analysis_data/AVL size time values.txt");
+        FileManager.writeLongToFile(rb_sizeTimes, "target/other_analysis_data/Red-Black size time values.txt");
+        FileManager.writeLongToFile(avl_sizeTimes, "target/other_analysis_data/AVL size time values.txt");
     }
 
     @Test
@@ -220,19 +220,20 @@ public class AnalysisClass {
             red_black.insert(inputValue);
             AVL.insert(inputValue);
         }
-        FileManager.writeToFile(rb_heightTimes, "target/other_analysis_data/Red-Black Height time values.txt");
-        FileManager.writeToFile(avl_heightTimes, "target/other_analysis_data/AVL Height time values.txt");
+        FileManager.writeLongToFile(rb_heightTimes, "target/other_analysis_data/Red-Black Height time values.txt");
+        FileManager.writeLongToFile(avl_heightTimes, "target/other_analysis_data/AVL Height time values.txt");
     }
 
     // Generate tree of base baseCount words, difference between each teo consecutive files difference, length of word is length, number of files generated is points
     public void randomWordsGenerator(int baseCount, int difference, int length, int points) throws IOException {
         ArrayList<String> base = randomString(baseCount, length);
-        writeToFile(base, "target/batch/base.txt");
+        FileManager.writeStringToFile(base, "target/batch/base.txt");
+        System.out.println("wawa");
 
         // 200 points, difference in number of words in each two consecutive files = 500
         for(int i = 0; i < points; i++) {
             ArrayList<String> file = randomString( difference * (i + 1), length);
-            writeToFile(file, "target/batch/" + Integer.toString(i + 1) + ".txt");
+            FileManager.writeStringToFile(file, "target/batch/" + Integer.toString(i + 1) + ".txt");
         }
     }
     public ArrayList<String> randomString(int max, int length) {
@@ -250,12 +251,18 @@ public class AnalysisClass {
         }
         return base;
     }
+
+    @Test
+    void timeTest() throws IOException {
+        // called here to control parameters
+        randomWordsGenerator(10000, 500, 26, 1000);
+    }
     // Only for analysis
     @Test
     void batch() {
         AnalysisClass analysisClass = new AnalysisClass();
         try {
-            analysisClass.compare_bash_insert_time(1000, 500);
+            analysisClass.compare_batch_insert_time(1000, 500);
         } catch (CloneNotSupportedException e) {
             System.out.println("Clone not supported!");
         } catch (IOException e) {
@@ -271,22 +278,24 @@ public class AnalysisClass {
         }
     }
 
-    public void compare_bash_insert_time(int points, int maxFile) throws CloneNotSupportedException, IOException {
+    public void compare_batch_insert_time(int points, int maxFile) throws CloneNotSupportedException, IOException {
         BST<String> red_black = new RB<>();
         BST<String> avl = new AVL<>();
+        CommandInvoker commands = new CommandInvoker();
+        BatchInsert insert = (BatchInsert) commands.invoke(Commands.BATCHINSERT);
 
-        TreeCloner<String> rb_cloner = new TreeCloner<>(red_black);
-        TreeCloner<String> avl_cloner = new TreeCloner<>(avl);
-
-        BatchInsert insert = new BatchInsert();
         FileManager reader = new FileManager();
         List<String> initial_words_in_tree = reader.readFile("target/batch/base.txt");
         //each tree will be initialized by 600 words
         insert.batchInsert(avl, initial_words_in_tree);
         insert.batchInsert(red_black, initial_words_in_tree);
+        System.out.println(avl.getSize());
 
-        BST<String> avl_clone;
-        BST<String> rb_clone;
+        TreeCloner<String> rb_cloner = new TreeCloner<>(red_black);
+        TreeCloner<String> avl_cloner = new TreeCloner<>(avl);
+
+        AVL<String> avl_clone;
+        RB<String> rb_clone;
 
         // to calculate time
         long start_avl_batchInsertTime , end_avl_batchInsertTime, finish_avl_batchInsertTime;
@@ -300,8 +309,8 @@ public class AnalysisClass {
         // word or 2 words or ... to the tree which have 1000 words and the base tree isn't affected by the insertion
         for(int i = 1 ; i <= points ; i++){
             List<String> added_words = reader.readFile("target/batch/" + Integer.toString(i) + ".txt");
-            avl_clone = avl_cloner.getClone();
-            rb_clone = rb_cloner.getClone();
+            avl_clone = (AVL<String>) avl_cloner.getClone();
+            rb_clone = (RB<String>) rb_cloner.getClone();
 
             start_avl_batchInsertTime =  System.nanoTime();
             insert.batchInsert(avl_clone,added_words);
@@ -320,12 +329,12 @@ public class AnalysisClass {
         }
         String timePathAVL = "target/batch/AVL Batch Insert Time Values.txt";
         String timePathRB = "target/batch/RB Batch Insert Time Values.txt";
-        String heightPathAVL = "target/batch/AVL_Height.txt";
-        String heightPathRB = "target/batch/RB_Height.txt";
-        FileManager.writeToFile(avl_batchInsertTimes, timePathAVL);
-        FileManager.writeToFile(rb_batchInsertTimes, timePathRB);
-        FileManager.writeToFile(heightAVL, heightPathAVL);
-        FileManager.writeToFile(heightRB, heightPathRB);
+        String heightPathAVL = "target/batch/AVL_Height_insert.txt";
+        String heightPathRB = "target/batch/RB_Height_insert.txt";
+        FileManager.writeLongToFile(avl_batchInsertTimes, timePathAVL);
+        FileManager.writeLongToFile(rb_batchInsertTimes, timePathRB);
+        FileManager.writeIntToFile(heightAVL, heightPathAVL);
+        FileManager.writeIntToFile(heightRB, heightPathRB);
     }
 
     public void compare_bash_delete_time(int points, int maxFile) throws CloneNotSupportedException, IOException {
@@ -351,6 +360,8 @@ public class AnalysisClass {
         long start_rb_batchDeleteTime , end_rb_batchDeleteTime, finish_rb_batchDeleteTime;
         List<Long> rb_batchInsertTimes = new ArrayList<>();
         List<Long> avl_batchInsertTimes = new ArrayList<>();
+        List<Integer> heightAVL = new ArrayList<>();
+        List<Integer> heightRB = new ArrayList<>();
 
         // Here, we will test the batch insert on the two types of trees by deleting
         // word or 2 words or ... to the tree which have 1000 words and the base tree isn't affected by the insertion
@@ -371,10 +382,16 @@ public class AnalysisClass {
 
             avl_batchInsertTimes.add(finish_avl_batchDeleteTime);
             rb_batchInsertTimes.add(finish_rb_batchDeleteTime);
+            heightAVL.add(avl_clone.getHeight());
+            heightRB.add(rb_clone.getHeight());
         }
         String timePathAVL = "target/batch/AVL Batch Delete Time Values.txt";
         String timePathRB = "target/batch/RB Batch Delete Time Values.txt";
-        FileManager.writeToFile(avl_batchInsertTimes, timePathAVL);
-        FileManager.writeToFile(rb_batchInsertTimes, timePathRB);
+        String heightPathAVL = "target/batch/AVL_Height_delete.txt";
+        String heightPathRB = "target/batch/RB_Height_delete.txt";
+        FileManager.writeLongToFile(avl_batchInsertTimes, timePathAVL);
+        FileManager.writeLongToFile(rb_batchInsertTimes, timePathRB);
+        FileManager.writeIntToFile(heightAVL, heightPathAVL);
+        FileManager.writeIntToFile(heightRB, heightPathRB);
     }
 }
