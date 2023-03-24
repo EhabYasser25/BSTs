@@ -31,7 +31,7 @@ class RBTest extends BST {
         assertFalse(testTree.insert(null)); //check inserting a null element
 
         //This should be the inorder arrangement of the tree after balancing
-        assertEquals(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 10, 13, 23, 35, 45, 75, 77)), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 10, 13, 23, 35, 45, 75, 77)), testTree.visit(VisitType.DFS));
 
         assertTrue(testTree.delete(13));
         assertTrue(testTree.delete(4));
@@ -45,7 +45,7 @@ class RBTest extends BST {
         assertTrue(testTree.insert(35));
         assertTrue(testTree.insert(13));
 
-        assertEquals(new ArrayList<Integer>(Arrays.asList(1, 3, 4, 5, 6, 7, 8, 10, 13, 23, 35, 75)), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList(1, 3, 4, 5, 6, 7, 8, 10, 13, 23, 35, 75)), testTree.visit(VisitType.DFS));
     }
 
     @Test
@@ -69,7 +69,7 @@ class RBTest extends BST {
         assertTrue(testTree.insert(16.030405));
         assertEquals(testTree.size, 17); //checking for size after large insertion
 
-        assertEquals(new ArrayList<Double>(Arrays.asList(3.4785, 16.030405, 21.2454, 23.451, 26.78453, 37.0004, 42.8, 44.7, 45.35714, 47.254, 49.457, 49.97, 66.111, 78.789, 81.0, 82.789, 89.457)), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList(3.4785, 16.030405, 21.2454, 23.451, 26.78453, 37.0004, 42.8, 44.7, 45.35714, 47.254, 49.457, 49.97, 66.111, 78.789, 81.0, 82.789, 89.457)), testTree.visit(VisitType.DFS));
 
         assertFalse(testTree.search(21.245399)); //searching for an element that doesn't exist
         assertEquals(testTree.size, 17); //asserting that size didn't change after searching
@@ -84,7 +84,7 @@ class RBTest extends BST {
         assertFalse(testTree.search(null)); //search for null
 
         //This should be the inorder ordering of the tree after deletion
-        assertEquals(new ArrayList<Double>(Arrays.asList(3.4785, 16.030405, 21.2454, 23.451, 26.78453, 42.8, 44.7, 45.35714, 47.254, 49.457, 49.97, 66.111, 78.789, 81.0, 82.789, 89.457)), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList(3.4785, 16.030405, 21.2454, 23.451, 26.78453, 42.8, 44.7, 45.35714, 47.254, 49.457, 49.97, 66.111, 78.789, 81.0, 82.789, 89.457)), testTree.visit(VisitType.DFS));
 
         //checking the colour of various nodes in the tree
         assertTrue(testTree.getRoot().isBlack());
@@ -186,7 +186,7 @@ class RBTest extends BST {
         assertTrue(testTree.insert(-3));
         assertEquals(testTree.size, 13); //checking for size after large insertion
 
-        assertEquals(new ArrayList<Integer>(Arrays.asList(-3, 4, 8, 9, 10, 16, 20, 33, 42, 72, 90, 101, 102)), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList(-3, 4, 8, 9, 10, 16, 20, 33, 42, 72, 90, 101, 102)), testTree.visit(VisitType.DFS));
         assertFalse(testTree.insert(10)); //trying to insert element that exists
         assertEquals(testTree.size, 13); //asserting that size didn't change after false insert
 
@@ -201,7 +201,7 @@ class RBTest extends BST {
         assertTrue(testTree.delete(33));
 
         //This should be the inorder ordering of the tree after deletion
-        assertEquals(new ArrayList<Integer>(Arrays.asList(8, 10, 16, 42, 72, 90, 102)), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList(8, 10, 16, 42, 72, 90, 102)), testTree.visit(VisitType.DFS));
         assertEquals(testTree.size, 7); //asserting the size after large deletion
     }
 
@@ -350,7 +350,7 @@ class RBTest extends BST {
         assertTrue(testTree.search("bounce"));
 
         //This is the final inorder ordering of the tree
-        assertEquals(new ArrayList<String>(Arrays.asList("16.030405", "21.245399", "23.451", "4.7", "appear", "bounce", "college", "creation", "fair", "flex", "front", "interrupt", "jealous", "morning", "pick", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList("16.030405", "21.245399", "23.451", "4.7", "appear", "bounce", "college", "creation", "fair", "flex", "front", "interrupt", "jealous", "morning", "pick", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
 
         assertFalse(testTree.search("software")); //searching for an element that doesn't exist
 
@@ -382,7 +382,7 @@ class RBTest extends BST {
         assertTrue(testTree.search("shallow"));
         assertEquals(testTree.size, 18); //check the size after insertion
 
-        assertEquals(new ArrayList<String>(Arrays.asList("16.030405", "21.245399", "23.451", "appear", "arena", "bounce", "college", "fair", "flex", "forbid", "front", "hemisphere", "interrupt", "jealous", "morning", "pin", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
+        assertEquals(new ArrayList<>(Arrays.asList("16.030405", "21.245399", "23.451", "appear", "arena", "bounce", "college", "fair", "flex", "forbid", "front", "hemisphere", "interrupt", "jealous", "morning", "pin", "sacrifice", "shallow")), testTree.visit(VisitType.DFS));
         assertEquals("hemisphere", testTree.getRoot().getData());
 
         //checking the colour of some nodes to make sure of the correctness of colours

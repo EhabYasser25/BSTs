@@ -16,7 +16,7 @@ class AVLTest extends BST {
 
     @Test
     void mixed() {
-        AVL<Integer> testTree = new AVL<Integer>(9);
+        AVL<Integer> testTree = new AVL<>(9);
 
         assertFalse(testTree.insert(9)); // insert a node has the same data
         assertTrue(testTree.insert(5));
@@ -70,7 +70,7 @@ class AVLTest extends BST {
     @Test
     void normalDeletion() {
         // 5 cases
-        AVL<Integer> testTree = new AVL<Integer>();
+        AVL<Integer> testTree = new AVL<>();
         testTree.insert(20);
         testTree.insert(8);
         testTree.insert(10);
@@ -98,7 +98,7 @@ class AVLTest extends BST {
     @Test
     void cornerDeletion() {
         // 3 corner cases
-        AVL<Integer> testTree = new AVL<Integer>();
+        AVL<Integer> testTree = new AVL<>();
 
         assertFalse(testTree.delete(5)); // delete with no insertions
 
@@ -130,7 +130,7 @@ class AVLTest extends BST {
     @Test
     void normalInsertion(){
         // Test rotations and height after each rotation in insertion
-        AVL<Integer> testTree = new AVL<Integer>();
+        AVL<Integer> testTree = new AVL<>();
         testTree.insert(20);
         testTree.insert(5);
         testTree.insert(10); // LR
@@ -178,7 +178,7 @@ class AVLTest extends BST {
     void search() {
         // 3 cases
         // TODO find cases
-        AVL<Integer> testTree = new AVL<Integer>();
+        AVL<Integer> testTree = new AVL<>();
 
         testTree.insert(20);
         testTree.insert(8);

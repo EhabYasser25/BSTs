@@ -3,8 +3,6 @@ import Data_Structures.Node.NilNode;
 import Data_Structures.Node.Node;
 import java.util.ArrayList;
 
-import java.util.ArrayList;
-
 public class BST<T extends Comparable<T>>{
     /**
      * Each tree has its own root, so it is removed from the parent class
@@ -228,7 +226,6 @@ public class BST<T extends Comparable<T>>{
     }
 
     public ArrayList<T> visit(VisitType visitType) {
-        // TODO choose one traverse to find height of RB tree
         ArrayList<T> valuesList = new ArrayList<>();
         if(node_isNull(this.root))
             return valuesList;
