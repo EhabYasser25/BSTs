@@ -30,7 +30,7 @@ public class AVL<T extends Comparable<T>> extends BST<T> {
         return (AVLNode<T>) this.root;
     }
     public int getHeight() {
-        return super.getHeight();
+        return this.getRoot().getHeight();
     }
 
     public boolean insert(T data) {
