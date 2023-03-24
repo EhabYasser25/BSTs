@@ -3,8 +3,6 @@ import Data_Structures.Node.NilNode;
 import Data_Structures.Node.Node;
 import java.util.ArrayList;
 
-import java.util.ArrayList;
-
 public class BST<T extends Comparable<T>>{
     /**
      * Each tree has its own root, so it is removed from the parent class

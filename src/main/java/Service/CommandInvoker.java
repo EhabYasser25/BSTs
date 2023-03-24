@@ -2,8 +2,6 @@ package Service;
 
 import Data_Structures.Tree.BST;
 
-import java.awt.*;
-import java.util.List;
 import java.util.Scanner;
 
 public class CommandInvoker {

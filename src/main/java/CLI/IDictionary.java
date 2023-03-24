@@ -1,9 +1,9 @@
 package CLI;
 
 public interface IDictionary {
-    public void startProgram();
+    void startProgram();
 
-    public void printIntro();
+    void printIntro();
 
-    public void initiate(int option);
+    void initiate(int option);
 }
