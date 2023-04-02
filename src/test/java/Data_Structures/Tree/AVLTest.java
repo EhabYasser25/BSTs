@@ -220,7 +220,7 @@ class AVLTest extends BST {
                         notFound = reader.readFile("target/batch_cases/10.txt"),
                         empty = reader.readFile("target/batch_cases/empty.txt");
 
-        // insert the whole 90 words sample
+        // insert the whole 100 words sample
         insert.batchInsert(avl, ABCD);
         insert.batchInsert(rb, ABCD);
 
@@ -338,7 +338,7 @@ class AVLTest extends BST {
         assertEquals(0, RBAP.x);
         assertEquals(30, rbInsert.getSize());
 
-        // words all already exist
+        // words all don't exist
         Point BP = insert.batchInsert(avlInsert, B);
         Point RBBP = insert.batchInsert(rbInsert, B);
 
@@ -352,7 +352,7 @@ class AVLTest extends BST {
         assertEquals(0, RBBP.x);
         assertEquals(60, rbInsert.getSize());
 
-        // words some exist and some not
+        // words all don't exist
         Point CP =  insert.batchInsert(avlInsert, C);
         Point CRBP =  insert.batchInsert(rbInsert, C);
 
@@ -366,7 +366,7 @@ class AVLTest extends BST {
         assertEquals(0, CRBP.x);
         assertEquals(90, avlInsert.getSize());
 
-        // empty file
+        // words some exist and some not
         Point ABCDP = insert.batchInsert(avlInsert, ABCD);
         Point ABCDRBP = insert.batchInsert(rbInsert, ABCD);
 
@@ -385,13 +385,13 @@ class AVLTest extends BST {
         Point emptyRBP = insert.batchInsert(avlInsert, empty);
 
         // AVL
-        assertEquals(0, emptyP.x); // 20 already exist not added
-        assertEquals(0, emptyP.y); // 10 not exist so add them
+        assertEquals(0, emptyP.x);
+        assertEquals(0, emptyP.y);
         assertEquals(100, avlInsert.getSize()); // tree size check
 
         // RB
-        assertEquals(0, emptyRBP.x); // 20 already exist not added
-        assertEquals(0, emptyRBP.y); // 10 not exist so add them
+        assertEquals(0, emptyRBP.x);
+        assertEquals(0, emptyRBP.y);
         assertEquals(100, rbInsert.getSize()); // tree size check
     }
 
