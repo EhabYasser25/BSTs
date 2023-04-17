@@ -257,7 +257,7 @@ public class AnalysisClass {
         // called here to control parameters
         randomWordsGenerator(10000, 500, 26, 1000);
     }
-    // Only for analysis
+   // Only for analysis
     @Test
     void batch() {
         AnalysisClass analysisClass = new AnalysisClass();
