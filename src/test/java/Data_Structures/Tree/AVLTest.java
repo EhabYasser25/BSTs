@@ -214,11 +214,11 @@ class AVLTest extends BST {
         FileManager reader = new FileManager();
 
         List<String>    A = reader.readFile("target/batch_cases/30A.txt"),
-                        B = reader.readFile("target/batch_cases/30B.txt"),
-                        ABCD = reader.readFile("target/batch_cases/100A.txt"),
-                        fiveWords = reader.readFile("target/batch_cases/5.txt"),
-                        notFound = reader.readFile("target/batch_cases/10.txt"),
-                        empty = reader.readFile("target/batch_cases/empty.txt");
+                B = reader.readFile("target/batch_cases/30B.txt"),
+                ABCD = reader.readFile("target/batch_cases/100A.txt"),
+                fiveWords = reader.readFile("target/batch_cases/5.txt"),
+                notFound = reader.readFile("target/batch_cases/10.txt"),
+                empty = reader.readFile("target/batch_cases/empty.txt");
 
         // insert the whole 100 words sample
         insert.batchInsert(avl, ABCD);
@@ -319,10 +319,10 @@ class AVLTest extends BST {
         FileManager reader = new FileManager();
 
         List<String>    A = reader.readFile("target/batch_cases/30A.txt"),
-                        B = reader.readFile("target/batch_cases/30B.txt"),
-                        C = reader.readFile("target/batch_cases/30C.txt"),
-                        ABCD = reader.readFile("target/batch_cases/100A.txt"),
-                        empty = reader.readFile("target/batch_cases/empty.txt");
+                B = reader.readFile("target/batch_cases/30B.txt"),
+                C = reader.readFile("target/batch_cases/30C.txt"),
+                ABCD = reader.readFile("target/batch_cases/100A.txt"),
+                empty = reader.readFile("target/batch_cases/empty.txt");
 
         // insert all words to an empty tree
         Point AP = insert.batchInsert(avlInsert, A);

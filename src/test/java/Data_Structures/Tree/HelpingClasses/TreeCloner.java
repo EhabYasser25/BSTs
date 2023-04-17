@@ -13,7 +13,8 @@ public class TreeCloner<T extends Comparable<T>> {
         base = tree;
     }
 
-    public BST<T> getClone() throws CloneNotSupportedException{
+    public BST<T>
+    getClone() throws CloneNotSupportedException{
         BST<T> newTree = null;
         if(base instanceof RB<T>)
             newTree = new RB<>();

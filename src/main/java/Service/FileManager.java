@@ -51,7 +51,7 @@ public class FileManager {
     public static void writeIntToFile(List<Integer> base, String filename) throws IOException {
         try {
             FileWriter writer = new FileWriter(filename);
-            for (int word : base) {
+            for (Integer word : base) {
                 writer.write(word + "\n"); // write word followed by newline character
             }
             writer.close();
