@@ -9,8 +9,5 @@
         <module name="BSTs" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="BSTs" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
